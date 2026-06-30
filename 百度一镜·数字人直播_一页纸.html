@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>百度一镜 · 数字人直播 · 一页纸</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "PingFang SC", "Alibaba PuHuiTi", "Helvetica Neue", sans-serif; background: #FFFFFF; color: #1E293B; line-height: 1.5; }
+
+  .page { max-width: 1000px; margin: 0 auto; padding: 40px 36px; background: #FFFFFF; }
+
+  /* ── 品牌头 ── */
+  .brand-bar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 3px solid #1560FF; margin-bottom: 28px; }
+  .brand-bar .name { font-size: 22px; font-weight: 700; color: #1560FF; letter-spacing: 1px; }
+  .brand-bar .tagline { font-size: 14px; color: #64748B; }
+
+  /* ── 主标题 ── */
+  .hero { margin-bottom: 28px; }
+  .hero h1 { font-size: 36px; font-weight: 700; color: #0F172A; margin-bottom: 6px; }
+  .hero .sub { font-size: 16px; color: #64748B; }
+
+  /* ── 数据行 ── */
+  .data-row { display: flex; gap: 0; background: #F0F6FE; border-radius: 12px; overflow: hidden; margin-bottom: 32px; border: 1px solid #D6E4F7; }
+  .data-item { flex: 1; text-align: center; padding: 20px 12px; position: relative; }
+  .data-item + .data-item { border-left: 1px solid #D6E4F7; }
+  .data-item .num { font-size: 30px; font-weight: 700; color: #1560FF; }
+  .data-item .label { font-size: 12px; color: #64748B; margin-top: 4px; }
+
+  /* ── 区块标题 ── */
+  .section-title { font-size: 18px; font-weight: 700; color: #0F172A; margin-bottom: 16px; padding-left: 12px; border-left: 3px solid #1560FF; }
+
+  /* ── 能力卡片 ── */
+  .cap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 32px; }
+  .cap-card { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 18px; }
+  .cap-card h3 { font-size: 15px; font-weight: 700; color: #1560FF; margin-bottom: 8px; }
+  .cap-card ul { list-style: none; }
+  .cap-card ul li { font-size: 13px; color: #475569; padding: 2px 0 2px 16px; position: relative; }
+  .cap-card ul li::before { content: "\2713"; position: absolute; left: 0; color: #1560FF; font-weight: 700; }
+
+  /* ── 价格 ── */
+  .price-row { display: flex; gap: 12px; margin-bottom: 32px; }
+  .price-card { flex: 1; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 18px; text-align: center; }
+  .price-card.featured { border-color: #1560FF; background: #F0F6FE; }
+  .price-card .p-name { font-size: 15px; font-weight: 700; }
+  .price-card .p-desc { font-size: 12px; color: #64748B; margin: 2px 0 10px; }
+  .price-card .p-price { font-size: 26px; font-weight: 700; color: #1560FF; }
+  .price-card .p-unit { font-size: 12px; color: #64748B; }
+
+  /* ── 行业 ── */
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+  .tag { background: #F0F6FE; color: #1560FF; padding: 6px 16px; border-radius: 16px; font-size: 13px; border: 1px solid #D6E4F7; }
+
+  /* ── 底部 ── */
+  .footer { border-top: 2px solid #1560FF; padding-top: 16px; display: flex; justify-content: space-between; font-size: 12px; color: #64748B; }
+
+  @media (max-width: 700px) {
+    .page { padding: 20px 16px; }
+    .hero h1 { font-size: 28px; }
+    .cap-grid { grid-template-columns: 1fr; }
+    .price-row { flex-direction: column; }
+    .data-row { flex-wrap: wrap; }
+    .data-item { flex-basis: 45%; }
+    .data-item:nth-child(3) ~ .data-item { border-left: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- 品牌 -->
+  <div class="brand-bar">
+    <div class="name">百度一镜</div>
+    <div class="tagline">企业级AI数字人解决方案</div>
+  </div>
+
+  <!-- 主标题 -->
+  <div class="hero">
+    <h1>数字人直播</h1>
+    <div class="sub">7×24h 全天候 AI 数字人直播 · 让生意不打烊</div>
+  </div>
+
+  <!-- 核心数据 -->
+  <div class="data-row">
+    <div class="data-item"><div class="num">2400+</div><div class="label">数字人形象</div></div>
+    <div class="data-item"><div class="num">800+</div><div class="label">音色库</div></div>
+    <div class="data-item"><div class="num">&lt;15s</div><div class="label">智能回复</div></div>
+    <div class="data-item"><div class="num">95%+</div><div class="label">问答准确率</div></div>
+    <div class="data-item"><div class="num">1,200</div><div class="label">元/月起</div></div>
+  </div>
+
+  <!-- 核心能力 -->
+  <div class="section-title">核心能力</div>
+  <div class="cap-grid">
+    <div class="cap-card">
+      <h3>超拟真数字人</h3>
+      <ul>
+        <li>业内最大公库形象池，2400+ 形象 &amp; 800+ 音色</li>
+        <li>真人一键克隆，5 分钟回放即可生成</li>
+        <li>唇动 IDC 排名第一，高说服力进阶转化 +15%</li>
+      </ul>
+    </div>
+    <div class="cap-card">
+      <h3>AI 智能脚本</h3>
+      <ul>
+        <li>文心 + DeepSeek 双模型驱动</li>
+        <li>自动生成含痛点、卖点、促单的完整脚本</li>
+        <li>多风格可选：科普 / 种草 / 情感 / 通用</li>
+      </ul>
+    </div>
+    <div class="cap-card">
+      <h3>商品展示 &amp; 素材调度</h3>
+      <ul>
+        <li>5+ 切镜特写，脚本语义联动素材</li>
+        <li>AI 一键装修，100+ SKU 灵活切换</li>
+        <li>外景试驾、产品细节全覆盖</li>
+      </ul>
+    </div>
+    <div class="cap-card">
+      <h3>智能互动问答</h3>
+      <ul>
+        <li>15s 内口播回复，回复率 90%+</li>
+        <li>跨品问答，讲 A 品能答 B 品问题</li>
+        <li>多轮互动：邀评 / 动态讲解 / 主动逼单</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 版本定价 -->
+  <div class="section-title">版本与定价</div>
+  <div class="price-row">
+    <div class="price-card">
+      <div class="p-name">基础版</div>
+      <div class="p-desc">公库形象开播</div>
+      <div class="p-price">1,200</div>
+      <div class="p-unit">元/月</div>
+    </div>
+    <div class="price-card featured">
+      <div class="p-name">旗舰版</div>
+      <div class="p-desc">真人克隆 · 送 5 次克隆</div>
+      <div class="p-price">2,300</div>
+      <div class="p-unit">元/月</div>
+    </div>
+    <div class="price-card">
+      <div class="p-name">进阶版</div>
+      <div class="p-desc">高说服力进阶形象</div>
+      <div class="p-price">4,000</div>
+      <div class="p-unit">元/个起</div>
+    </div>
+  </div>
+
+  <!-- 适用行业 -->
+  <div class="section-title">适用行业</div>
+  <div class="tags">
+    <span class="tag">电商带货</span>
+    <span class="tag">在线教育</span>
+    <span class="tag">金融保险</span>
+    <span class="tag">房产汽车</span>
+    <span class="tag">医疗服务</span>
+    <span class="tag">本地生活</span>
+    <span class="tag">品牌官播</span>
+    <span class="tag">出海企业</span>
+  </div>
+
+  <!-- 底部 -->
+  <div class="footer">
+    <span>百度一镜 · 企业级AI数字人解决方案</span>
+    <span>让增长，更简单</span>
+  </div>
+
+</div>
+</body>
+</html>

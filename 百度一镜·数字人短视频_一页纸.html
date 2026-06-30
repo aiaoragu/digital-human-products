@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>百度一镜 · 数字人短视频 · 一页纸</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "PingFang SC", "Alibaba PuHuiTi", "Helvetica Neue", sans-serif; background: #FFFFFF; color: #1E293B; line-height: 1.5; }
+  .page { max-width: 1000px; margin: 0 auto; padding: 40px 36px; background: #FFFFFF; }
+  .brand-bar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 3px solid #1560FF; margin-bottom: 28px; }
+  .brand-bar .name { font-size: 22px; font-weight: 700; color: #1560FF; letter-spacing: 1px; }
+  .brand-bar .tagline { font-size: 14px; color: #64748B; }
+  .hero { margin-bottom: 28px; }
+  .hero h1 { font-size: 36px; font-weight: 700; color: #0F172A; margin-bottom: 6px; }
+  .hero .sub { font-size: 16px; color: #64748B; }
+  .data-row { display: flex; gap: 0; background: #F0F6FE; border-radius: 12px; overflow: hidden; margin-bottom: 32px; border: 1px solid #D6E4F7; }
+  .data-item { flex: 1; text-align: center; padding: 20px 12px; position: relative; }
+  .data-item + .data-item { border-left: 1px solid #D6E4F7; }
+  .data-item .num { font-size: 30px; font-weight: 700; color: #1560FF; }
+  .data-item .label { font-size: 12px; color: #64748B; margin-top: 4px; }
+  .section-title { font-size: 18px; font-weight: 700; color: #0F172A; margin-bottom: 16px; padding-left: 12px; border-left: 3px solid #1560FF; }
+  .cap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 32px; }
+  .cap-card { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 18px; }
+  .cap-card h3 { font-size: 15px; font-weight: 700; color: #1560FF; margin-bottom: 8px; }
+  .cap-card ul { list-style: none; }
+  .cap-card ul li { font-size: 13px; color: #475569; padding: 2px 0 2px 16px; position: relative; }
+  .cap-card ul li::before { content: "\2713"; position: absolute; left: 0; color: #1560FF; font-weight: 700; }
+  .scene-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 32px; }
+  .scene-card { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 16px; text-align: center; }
+  .scene-card .icon { font-size: 28px; margin-bottom: 6px; }
+  .scene-card h4 { font-size: 14px; font-weight: 700; color: #0F172A; }
+  .scene-card p { font-size: 12px; color: #64748B; margin-top: 4px; }
+  .flow-row { display: flex; align-items: center; gap: 8px; margin-bottom: 32px; padding: 20px; background: #F0F6FE; border-radius: 12px; border: 1px solid #D6E4F7; }
+  .flow-step { flex: 1; text-align: center; }
+  .flow-step .step-num { display: inline-block; width: 28px; height: 28px; line-height: 28px; border-radius: 50%; background: #1560FF; color: #fff; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+  .flow-step .step-label { font-size: 13px; color: #475569; }
+  .flow-arrow { color: #1560FF; font-size: 20px; font-weight: 700; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+  .tag { background: #F0F6FE; color: #1560FF; padding: 6px 16px; border-radius: 16px; font-size: 13px; border: 1px solid #D6E4F7; }
+  .footer { border-top: 2px solid #1560FF; padding-top: 16px; display: flex; justify-content: space-between; font-size: 12px; color: #64748B; }
+  @media (max-width: 700px) {
+    .page { padding: 20px 16px; }
+    .hero h1 { font-size: 28px; }
+    .cap-grid { grid-template-columns: 1fr; }
+    .scene-grid { grid-template-columns: 1fr; }
+    .flow-row { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); }
+    .data-row { flex-wrap: wrap; }
+    .data-item { flex-basis: 45%; }
+    .data-item:nth-child(3) ~ .data-item { border-left: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="brand-bar">
+    <div class="name">百度一镜</div>
+    <div class="tagline">企业级AI数字人解决方案</div>
+  </div>
+
+  <div class="hero">
+    <h1>数字人短视频</h1>
+    <div class="sub">输入文案，自动出片 · 批量生产，成本降低 85%</div>
+  </div>
+
+  <div class="data-row">
+    <div class="data-item"><div class="num">-85%</div><div class="label">制作成本</div></div>
+    <div class="data-item"><div class="num">3-5min</div><div class="label">快速出片</div></div>
+    <div class="data-item"><div class="num">30s-3min</div><div class="label">视频时长</div></div>
+    <div class="data-item"><div class="num">批量</div><div class="label">规模生产</div></div>
+  </div>
+
+  <div class="section-title">核心能力</div>
+  <div class="cap-grid">
+    <div class="cap-card">
+      <h3>文本自动出片</h3>
+      <ul>
+        <li>输入文案即自动生成数字人播报视频</li>
+        <li>无需真人拍摄、无需场景搭建</li>
+        <li>支持多风格：新闻/科普/营销/情感</li>
+      </ul>
+    </div>
+    <div class="cap-card">
+      <h3>批量生产能力</h3>
+      <ul>
+        <li>支持大规模视频素材批量输出</li>
+        <li>满足内容矩阵运营需求</li>
+        <li>视频时长 30s ~ 3min 可设</li>
+      </ul>
+    </div>
+    <div class="cap-card">
+      <h3>灵活编辑</h3>
+      <ul>
+        <li>支持预览、修改、重新生成</li>
+        <li>上传参考图自定义形象/姿势/场景</li>
+        <li>输出质量可控，专业级效果</li>
+      </ul>
+    </div>
+    <div class="cap-card">
+      <h3>AI 视频底板生成</h3>
+      <ul>
+        <li>上传商品链接，一键生成完整视频</li>
+        <li>数字人 + 场景 + 商品展示</li>
+        <li>3-5 分钟快速出片，3 分钟长视频稳定一致</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-title">生产流程</div>
+  <div class="flow-row">
+    <div class="flow-step"><div class="step-num">1</div><div class="step-label">输入文案或商品链接</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="step-num">2</div><div class="step-label">选择形象/场景/风格</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="step-num">3</div><div class="step-label">AI 自动生成视频</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="step-num">4</div><div class="step-label">预览调整</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="step-num">5</div><div class="step-label">下载发布</div></div>
+  </div>
+
+  <div class="section-title">应用场景</div>
+  <div class="scene-grid">
+    <div class="scene-card">
+      <div class="icon">📰</div>
+      <h4>内容创作</h4>
+      <p>军事/时政/财经/情感类视频批量生产</p>
+    </div>
+    <div class="scene-card">
+      <div class="icon">📢</div>
+      <h4>广告营销</h4>
+      <p>商品推广视频、品牌宣传视频</p>
+    </div>
+    <div class="scene-card">
+      <div class="icon">🎬</div>
+      <h4>影视剧集</h4>
+      <p>数字人角色、解说视频</p>
+    </div>
+    <div class="scene-card">
+      <div class="icon">📖</div>
+      <h4>漫剧/短剧</h4>
+      <p>数字人漫剧内容生产</p>
+    </div>
+  </div>
+
+  <div class="section-title">适用行业</div>
+  <div class="tags">
+    <span class="tag">内容媒体</span>
+    <span class="tag">电商零售</span>
+    <span class="tag">广告营销</span>
+    <span class="tag">影视娱乐</span>
+    <span class="tag">教育培训</span>
+    <span class="tag">金融资讯</span>
+    <span class="tag">政务宣传</span>
+    <span class="tag">企业品牌</span>
+  </div>
+
+  <div class="footer">
+    <span>百度一镜 · 企业级AI数字人解决方案</span>
+    <span>让增长，更简单</span>
+  </div>
+
+</div>
+</body>
+</html>

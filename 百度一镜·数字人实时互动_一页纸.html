@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>百度一镜 · 数字人实时互动 · 一页纸</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "PingFang SC", "Alibaba PuHuiTi", "Helvetica Neue", sans-serif; background: #FFFFFF; color: #1E293B; line-height: 1.5; }
+  .page { max-width: 1000px; margin: 0 auto; padding: 40px 36px; background: #FFFFFF; }
+  .brand-bar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 3px solid #1560FF; margin-bottom: 28px; }
+  .brand-bar .name { font-size: 22px; font-weight: 700; color: #1560FF; letter-spacing: 1px; }
+  .brand-bar .tagline { font-size: 14px; color: #64748B; }
+  .hero { margin-bottom: 28px; }
+  .hero h1 { font-size: 36px; font-weight: 700; color: #0F172A; margin-bottom: 6px; }
+  .hero .sub { font-size: 16px; color: #64748B; }
+  .data-row { display: flex; gap: 0; background: #F0F6FE; border-radius: 12px; overflow: hidden; margin-bottom: 32px; border: 1px solid #D6E4F7; }
+  .data-item { flex: 1; text-align: center; padding: 20px 12px; position: relative; }
+  .data-item + .data-item { border-left: 1px solid #D6E4F7; }
+  .data-item .num { font-size: 30px; font-weight: 700; color: #1560FF; }
+  .data-item .label { font-size: 12px; color: #64748B; margin-top: 4px; }
+  .section-title { font-size: 18px; font-weight: 700; color: #0F172A; margin-bottom: 16px; padding-left: 12px; border-left: 3px solid #1560FF; }
+  .cap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 32px; }
+  .cap-card { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 18px; }
+  .cap-card h3 { font-size: 15px; font-weight: 700; color: #1560FF; margin-bottom: 8px; }
+  .cap-card ul { list-style: none; }
+  .cap-card ul li { font-size: 13px; color: #475569; padding: 2px 0 2px 16px; position: relative; }
+  .cap-card ul li::before { content: "\2713"; position: absolute; left: 0; color: #1560FF; font-weight: 700; }
+  .scene-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 32px; }
+  .scene-card { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 16px; text-align: center; }
+  .scene-card .icon { font-size: 28px; margin-bottom: 6px; }
+  .scene-card h4 { font-size: 14px; font-weight: 700; color: #0F172A; }
+  .scene-card p { font-size: 12px; color: #64748B; margin-top: 4px; }
+  .feature-row { display: flex; gap: 12px; margin-bottom: 32px; }
+  .feature-card { flex: 1; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 18px; text-align: center; }
+  .feature-card .f-name { font-size: 15px; font-weight: 700; }
+  .feature-card .f-desc { font-size: 12px; color: #64748B; margin: 2px 0; }
+  .feature-card .f-data { font-size: 24px; font-weight: 700; color: #1560FF; margin-top: 8px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+  .tag { background: #F0F6FE; color: #1560FF; padding: 6px 16px; border-radius: 16px; font-size: 13px; border: 1px solid #D6E4F7; }
+  .footer { border-top: 2px solid #1560FF; padding-top: 16px; display: flex; justify-content: space-between; font-size: 12px; color: #64748B; }
+  @media (max-width: 700px) {
+    .page { padding: 20px 16px; }
+    .hero h1 { font-size: 28px; }
+    .cap-grid { grid-template-columns: 1fr; }
+    .scene-grid { grid-template-columns: 1fr; }
+    .feature-row { flex-direction: column; }
+    .data-row { flex-wrap: wrap; }
+    .data-item { flex-basis: 45%; }
+    .data-item:nth-child(3) ~ .data-item { border-left: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="brand-bar">
+    <div class="name">百度一镜</div>
+    <div class="tagline">企业级AI数字人解决方案</div>
+  </div>
+
+  <div class="hero">
+    <h1>数字人实时互动</h1>
+    <div class="sub">多模态 AI 实时交互 · 为千行百业打造专属数字员工</div>
+  </div>
+
+  <div class="data-row">
+    <div class="data-item"><div class="num">&lt;2.5s</div><div class="label">实时响应</div></div>
+    <div class="data-item"><div class="num">5+</div><div class="label">行业覆盖</div></div>
+    <div class="data-item"><div class="num">多模态</div><div class="label">交互引擎</div></div>
+    <div class="data-item"><div class="num">SaaS+PaaS</div><div class="label">灵活部署</div></div>
+  </div>
+
+  <div class="section-title">核心能力</div>
+  <div class="cap-grid">
+    <div class="cap-card">
+      <h3>多模态交互引擎</h3>
+      <ul>
+        <li>实时理解用户语音、文字、视觉输入</li>
+        <li>自主生成语义应答并同步驱动表情/口型/动作</li>
+        <li>实现类人自然对话的虚拟人形交互体</li>
+      </ul>
+    </div>
+    <div class="cap-card">
+      <h3>低延迟双向交互</h3>
+      <ul>
+        <li>响应时间 &lt;2.5 秒，流畅自然</li>
+        <li>用户对数字人 + 数字人对用户，完整闭环</li>
+        <li>支持多轮追问，识别高潜用户提升转化</li>
+      </ul>
+    </div>
+    <div class="cap-card">
+      <h3>声形同步驱动</h3>
+      <ul>
+        <li>看得懂、听得懂、感受得到</li>
+        <li>表情/动作/声音与语义高度统一</li>
+        <li>有表现力、能推理、不乱讲</li>
+      </ul>
+    </div>
+    <div class="cap-card">
+      <h3>定制化虚拟本体</h3>
+      <ul>
+        <li>形象资产配置 + 声音定制</li>
+        <li>人设配置：性格/风格/语言习惯</li>
+        <li>知识库接入：对接企业业务知识</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-title">应用场景</div>
+  <div class="scene-grid">
+    <div class="scene-card">
+      <div class="icon">🎓</div>
+      <h4>教育</h4>
+      <p>AI教师、口语陪练、AI面试</p>
+    </div>
+    <div class="scene-card">
+      <div class="icon">🏦</div>
+      <h4>金融</h4>
+      <p>开户引导、流程指引、投资助手</p>
+    </div>
+    <div class="scene-card">
+      <div class="icon">⭐</div>
+      <h4>文娱</h4>
+      <p>明星分身、形象大使、AI代言人</p>
+    </div>
+    <div class="scene-card">
+      <div class="icon">🏔️</div>
+      <h4>文旅</h4>
+      <p>AI导游、展厅讲解、虚拟NPC</p>
+    </div>
+    <div class="scene-card">
+      <div class="icon">🏛️</div>
+      <h4>政务</h4>
+      <p>新闻播报、展厅讲解、资讯解读</p>
+    </div>
+    <div class="scene-card">
+      <div class="icon">🏥</div>
+      <h4>医疗</h4>
+      <p>导诊咨询、健康科普、用药指引</p>
+    </div>
+  </div>
+
+  <div class="section-title">部署方式</div>
+  <div class="feature-row">
+    <div class="feature-card">
+      <div class="f-name">SaaS 标准化</div>
+      <div class="f-desc">开箱即用，快速上线</div>
+      <div class="f-data">标准版</div>
+    </div>
+    <div class="feature-card">
+      <div class="f-name">PaaS 定制化</div>
+      <div class="f-desc">深度集成，灵活扩展</div>
+      <div class="f-data">定制版</div>
+    </div>
+    <div class="feature-card">
+      <div class="f-name">多终端适配</div>
+      <div class="f-desc">APP / 小程序 / 网页 / 大屏</div>
+      <div class="f-data">全终端</div>
+    </div>
+  </div>
+
+  <div class="section-title">适用行业</div>
+  <div class="tags">
+    <span class="tag">教育</span>
+    <span class="tag">金融</span>
+    <span class="tag">文娱</span>
+    <span class="tag">文旅</span>
+    <span class="tag">政务</span>
+    <span class="tag">医疗</span>
+    <span class="tag">电商</span>
+    <span class="tag">运营商</span>
+  </div>
+
+  <div class="footer">
+    <span>百度一镜 · 企业级AI数字人解决方案</span>
+    <span>让增长，更简单</span>
+  </div>
+
+</div>
+</body>
+</html>

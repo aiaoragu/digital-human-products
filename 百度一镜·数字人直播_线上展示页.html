@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>百度一镜 · 数字人直播 — 线上产品介绍</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "PingFang SC", "Alibaba PuHuiTi", "Helvetica Neue", sans-serif; background: #FFFFFF; color: #1E293B; }
+
+  /* ── Header ── */
+  .header { background: linear-gradient(135deg, #1560FF 0%, #1B69FE 100%); padding: 56px 0 44px; text-align: center; color: #FFFFFF; }
+  .header .brand { font-size: 13px; letter-spacing: 4px; opacity: 0.85; margin-bottom: 12px; }
+  .header h1 { font-size: 40px; font-weight: 700; margin-bottom: 6px; }
+  .header .subtitle { font-size: 17px; opacity: 0.85; margin-bottom: 20px; }
+  .header .tagline { font-size: 13px; border: 1px solid rgba(255,255,255,0.5); display: inline-block; padding: 6px 24px; border-radius: 20px; }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 36px 24px; }
+
+  /* ── 数据 ── */
+  .data-row { display: flex; gap: 0; background: #F0F6FE; border-radius: 12px; overflow: hidden; margin-bottom: 40px; border: 1px solid #D6E4F7; }
+  .data-item { flex: 1; text-align: center; padding: 22px 12px; }
+  .data-item + .data-item { border-left: 1px solid #D6E4F7; }
+  .data-item .num { font-size: 32px; font-weight: 700; color: #1560FF; }
+  .data-item .label { font-size: 12px; color: #64748B; margin-top: 4px; }
+
+  /* ── 标题 ── */
+  .section-title { font-size: 22px; font-weight: 700; color: #0F172A; margin-bottom: 20px; padding-left: 14px; border-left: 4px solid #1560FF; }
+
+  /* ── 演示视频 ── */
+  .demo-card { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 24px; display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; }
+  .demo-card .info { flex: 1; min-width: 260px; }
+  .demo-card .info h3 { font-size: 17px; color: #1560FF; margin-bottom: 8px; }
+  .demo-card .info p { font-size: 14px; color: #475569; line-height: 1.7; }
+  .video-box { width: 340px; min-height: 192px; background: #F0F6FE; border-radius: 8px; border: 1px dashed #B0C9F7; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #64748B; font-size: 13px; gap: 6px; flex-shrink: 0; }
+  .video-box .play-icon { font-size: 32px; color: #1560FF; }
+  .video-box .hint { font-size: 12px; color: #94A3B8; }
+
+  /* ── 能力卡片 ── */
+  .cap-grid { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
+  .cap-card { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 24px; display: flex; gap: 24px; flex-wrap: wrap; }
+  .cap-card .info { flex: 1; min-width: 260px; }
+  .cap-card .info h3 { font-size: 17px; color: #1560FF; margin-bottom: 10px; }
+  .cap-card .info ul { list-style: none; }
+  .cap-card .info ul li { font-size: 14px; color: #475569; padding: 3px 0 3px 18px; position: relative; }
+  .cap-card .info ul li::before { content: "\2713"; position: absolute; left: 0; color: #1560FF; font-weight: 700; }
+
+  /* ── 价格 ── */
+  .price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 40px; }
+  .price-card { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 22px; text-align: center; }
+  .price-card.featured { border-color: #1560FF; background: #F0F6FE; }
+  .price-card .p-name { font-size: 16px; font-weight: 700; }
+  .price-card .p-desc { font-size: 12px; color: #64748B; margin: 2px 0 12px; }
+  .price-card .p-price { font-size: 28px; font-weight: 700; color: #1560FF; }
+  .price-card .p-unit { font-size: 13px; color: #64748B; }
+
+  /* ── 行业 ── */
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px; }
+  .tag { background: #F0F6FE; color: #1560FF; padding: 7px 18px; border-radius: 18px; font-size: 13px; border: 1px solid #D6E4F7; }
+
+  /* ── 下载 ── */
+  .download-area { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 32px; text-align: center; margin-bottom: 40px; }
+  .download-area h3 { font-size: 18px; margin-bottom: 16px; }
+  .btn-group { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 11px 24px; border-radius: 8px; font-size: 14px; font-weight: 600; text-decoration: none; }
+  .btn-primary { background: #1560FF; color: #fff; }
+  .btn-primary:hover { background: #1B69FE; }
+  .btn-outline { border: 1px solid #1560FF; color: #1560FF; }
+  .btn-outline:hover { background: #F0F6FE; }
+
+  /* ── Footer ── */
+  .footer { background: #1560FF; text-align: center; padding: 18px; font-size: 13px; color: #fff; }
+
+  @media (max-width: 768px) {
+    .header h1 { font-size: 28px; }
+    .data-row { flex-wrap: wrap; }
+    .data-item { flex-basis: 45%; }
+    .data-item:nth-child(3) ~ .data-item { border-left: none; }
+    .demo-card { flex-direction: column; }
+    .video-box { width: 100%; min-height: 200px; }
+    .cap-card { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="brand">BAIDU YIJING</div>
+  <h1>百度一镜 · 数字人直播</h1>
+  <div class="subtitle">7×24h 全天候 AI 数字人直播解决方案</div>
+  <div class="tagline">让增长，更简单</div>
+</div>
+
+<div class="container">
+
+  <div class="data-row">
+    <div class="data-item"><div class="num">2400+</div><div class="label">数字人形象</div></div>
+    <div class="data-item"><div class="num">800+</div><div class="label">音色库</div></div>
+    <div class="data-item"><div class="num">&lt;15s</div><div class="label">智能回复</div></div>
+    <div class="data-item"><div class="num">95%+</div><div class="label">问答准确率</div></div>
+    <div class="data-item"><div class="num">1,200</div><div class="label">元/月起</div></div>
+  </div>
+
+  <div class="section-title">产品演示</div>
+  <div class="demo-card">
+    <div class="info">
+      <h3>百度一镜 · 数字人直播 全景演示</h3>
+      <p>3 分钟快速了解产品全貌，涵盖形象克隆、AI 脚本、智能问答、商品展示等核心能力。替换此处 video 标签即可嵌入演示视频。</p>
+    </div>
+    <div class="video-box">
+      <div class="play-icon">&#9654;</div>
+      <div>全景演示视频</div>
+      <div class="hint">待上传 · 建议时长 3min</div>
+    </div>
+  </div>
+
+  <div class="section-title">核心能力</div>
+  <div class="cap-grid">
+    <div class="cap-card">
+      <div class="info">
+        <h3>超拟真数字人</h3>
+        <ul>
+          <li>业内最大公库形象池，2400+ 形象 &amp; 800+ 音色</li>
+          <li>真人一键克隆，5 分钟回放即可生成，唇动 IDC 排名第一</li>
+          <li>高说服力进阶模式，「讲到哪，动到哪」，转化率 +15%</li>
+        </ul>
+      </div>
+      <div class="video-box">
+        <div class="play-icon">&#9654;</div>
+        <div>形象克隆演示</div>
+        <div class="hint">待上传 · 建议时长 40s</div>
+      </div>
+    </div>
+    <div class="cap-card">
+      <div class="info">
+        <h3>AI 智能脚本</h3>
+        <ul>
+          <li>多模型驱动：文心 + DeepSeek + 定制电商模型</li>
+          <li>自动生成含痛点、卖点、价值延伸、促单的完整脚本</li>
+          <li>多风格可选：科普风 / 种草风 / 情感风 / 通用风</li>
+        </ul>
+      </div>
+      <div class="video-box">
+        <div class="play-icon">&#9654;</div>
+        <div>脚本生成录屏</div>
+        <div class="hint">待上传 · 建议时长 50s</div>
+      </div>
+    </div>
+    <div class="cap-card">
+      <div class="info">
+        <h3>商品展示 &amp; 素材调度</h3>
+        <ul>
+          <li>支持 5+ 切镜特写，脚本语义联动素材</li>
+          <li>AI 一键装修：背景 / 贴片 / 组件自由搭配</li>
+          <li>100+ SKU 灵活切换，超越真人展示效果</li>
+        </ul>
+      </div>
+      <div class="video-box">
+        <div class="play-icon">&#9654;</div>
+        <div>多品切换演示</div>
+        <div class="hint">待上传 · 建议时长 40s</div>
+      </div>
+    </div>
+    <div class="cap-card">
+      <div class="info">
+        <h3>智能互动问答</h3>
+        <ul>
+          <li>15s 内口播回复，回复率 90%+，准确率 95%+</li>
+          <li>跨品问答：讲 A 品时能答 B 品问题</li>
+          <li>多轮互动：邀评 / 动态讲解 / 主动追问逼单</li>
+        </ul>
+      </div>
+      <div class="video-box">
+        <div class="play-icon">&#9654;</div>
+        <div>问答场景演示</div>
+        <div class="hint">待上传 · 建议时长 50s</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">版本与定价</div>
+  <div class="price-grid">
+    <div class="price-card">
+      <div class="p-name">基础版</div>
+      <div class="p-desc">公库形象开播</div>
+      <div class="p-price">1,200</div>
+      <div class="p-unit">元 / 月</div>
+    </div>
+    <div class="price-card featured">
+      <div class="p-name">旗舰版</div>
+      <div class="p-desc">真人克隆 · 送 5 次克隆</div>
+      <div class="p-price">2,300</div>
+      <div class="p-unit">元 / 月</div>
+    </div>
+    <div class="price-card">
+      <div class="p-name">进阶版</div>
+      <div class="p-desc">高说服力进阶形象</div>
+      <div class="p-price">4,000</div>
+      <div class="p-unit">元 / 个起</div>
+    </div>
+  </div>
+
+  <div class="section-title">适用行业</div>
+  <div class="tags">
+    <span class="tag">电商带货</span>
+    <span class="tag">在线教育</span>
+    <span class="tag">金融保险</span>
+    <span class="tag">房产汽车</span>
+    <span class="tag">医疗服务</span>
+    <span class="tag">本地生活</span>
+    <span class="tag">品牌官播</span>
+    <span class="tag">出海企业</span>
+  </div>
+
+  <div class="download-area">
+    <h3>材料下载</h3>
+    <div class="btn-group">
+      <a href="#" class="btn btn-primary" download>一页纸概览 (HTML)</a>
+      <a href="#" class="btn btn-outline" download>完整方案 PPT</a>
+      <a href="#" class="btn btn-outline" download>场景定制版</a>
+    </div>
+    <p style="margin-top:14px; font-size:12px; color:#94A3B8;">预约演示请与我们联系</p>
+  </div>
+</div>
+
+<div class="footer">
+  百度一镜 · 企业级 AI 数字人解决方案 &nbsp;|&nbsp; 让增长，更简单
+</div>
+
+</body>
+</html>
