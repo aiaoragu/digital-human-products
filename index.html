@@ -3,148 +3,54 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>百度一镜 · 数字人产品材料</title>
+<title>百度一镜 · 数字人</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: "PingFang SC", "Alibaba PuHuiTi", "Helvetica Neue", sans-serif; background: #F8FAFC; color: #1E293B; }
-
-  /* ── Header ── */
-  .header { background: linear-gradient(135deg, #1560FF 0%, #1B69FE 100%); padding: 56px 0 44px; text-align: center; color: #FFFFFF; }
-  .header .brand { font-size: 13px; letter-spacing: 4px; opacity: 0.85; margin-bottom: 12px; }
-  .header h1 { font-size: 40px; font-weight: 700; margin-bottom: 6px; }
-  .header .subtitle { font-size: 17px; opacity: 0.85; margin-bottom: 20px; }
-  .header .tagline { font-size: 13px; border: 1px solid rgba(255,255,255,0.5); display: inline-block; padding: 6px 24px; border-radius: 20px; }
-
-  .container { max-width: 1100px; margin: 0 auto; padding: 36px 24px; }
-
-  /* ── 数据统计 ── */
-  .stats { display: flex; gap: 0; background: #FFFFFF; border-radius: 12px; overflow: hidden; margin-bottom: 40px; border: 1px solid #E2E8F0; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
-  .stat-item { flex: 1; text-align: center; padding: 22px 12px; }
-  .stat-item + .stat-item { border-left: 1px solid #E2E8F0; }
-  .stat-item .num { font-size: 28px; font-weight: 700; color: #1560FF; }
-  .stat-item .label { font-size: 12px; color: #64748B; margin-top: 4px; }
-
-  /* ── 标题 ── */
-  .section-title { font-size: 22px; font-weight: 700; color: #0F172A; margin-bottom: 20px; padding-left: 14px; border-left: 4px solid #1560FF; }
-  .section-desc { font-size: 14px; color: #64748B; margin: -12px 0 20px 18px; }
-
-  /* ── 卡片网格 ── */
-  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin-bottom: 40px; }
-  .card { background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 10px; padding: 24px; text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: box-shadow 0.2s, border-color 0.2s; }
-  .card:hover { border-color: #1560FF; box-shadow: 0 4px 12px rgba(21,96,255,0.10); }
-  .card .card-tag { font-size: 11px; letter-spacing: 2px; color: #1560FF; margin-bottom: 6px; }
-  .card .card-title { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
-  .card .card-desc { font-size: 13px; color: #64748B; line-height: 1.6; flex: 1; }
-  .card .card-meta { font-size: 12px; color: #94A3B8; margin-top: 12px; border-top: 1px solid #F1F5F9; padding-top: 10px; }
-
-  /* ── 一页纸微卡片 ── */
-  .mini-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-bottom: 40px; }
-  .mini-card { background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 18px; text-decoration: none; color: inherit; display: flex; align-items: center; gap: 14px; transition: box-shadow 0.2s, border-color 0.2s; }
-  .mini-card:hover { border-color: #1560FF; box-shadow: 0 4px 12px rgba(21,96,255,0.10); }
-  .mini-card .icon-box { width: 40px; height: 40px; background: #F0F6FE; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-  .mini-card .mini-info { flex: 1; min-width: 0; }
-  .mini-card .mini-title { font-size: 14px; font-weight: 600; }
-  .mini-card .mini-desc { font-size: 12px; color: #64748B; }
-
-  /* ── Footer ── */
-  .footer { background: #1560FF; text-align: center; padding: 18px; font-size: 13px; color: #fff; }
-
-  @media (max-width: 768px) {
-    .header h1 { font-size: 28px; }
-    .stats { flex-wrap: wrap; }
-    .stat-item { flex-basis: 45%; }
-    .card-grid { grid-template-columns: 1fr; }
-    .mini-grid { grid-template-columns: 1fr; }
-  }
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"PingFang SC","Alibaba PuHuiTi","Helvetica Neue",sans-serif;background:#F4F8FF;color:#1E293B}
+.hero{background:linear-gradient(135deg,#1560FF 0%,#1B69FE 100%);padding:56px 24px 44px;text-align:center;color:#fff}
+.hero .brand{font-size:13px;letter-spacing:4px;opacity:.85;margin-bottom:8px}
+.hero h1{font-size:34px;font-weight:700;margin-bottom:4px}
+.hero .sub{font-size:15px;opacity:.8}
+.container{max-width:860px;margin:0 auto;padding:40px 24px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.card{display:block;background:#fff;border:1px solid #E2E8F0;border-radius:12px;padding:28px 24px;text-decoration:none;color:inherit;transition:all .2s}
+.card:hover{border-color:#1560FF;box-shadow:0 6px 20px rgba(21,96,255,.10);transform:translateY(-2px)}
+.card .icon{font-size:32px;margin-bottom:8px}
+.card h2{font-size:18px;font-weight:700;margin-bottom:4px}
+.card p{font-size:13px;color:#64748B;line-height:1.6}
+.card .meta{font-size:11px;color:#94A3B8;margin-top:10px;padding-top:8px;border-top:1px solid #F1F5F9}
+.footer{text-align:center;padding:24px;font-size:12px;color:#94A3B8}
+@media(max-width:600px){.hero h1{font-size:26px}.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-
-<div class="header">
-  <div class="brand">BAIDU YIJING</div>
-  <h1>百度一镜 · 数字人</h1>
-  <div class="subtitle">企业级 AI 数字人产品材料总览</div>
-  <div class="tagline">让增长，更简单</div>
+<div class="hero">
+<div class="brand">BAIDU YIJING</div>
+<h1>百度一镜 · 数字人</h1>
+<div class="sub">企业级 AI 数字人解决方案 · 产品材料中心</div>
 </div>
-
 <div class="container">
-
-  <div class="stats">
-    <div class="stat-item"><div class="num">3</div><div class="label">产品线</div></div>
-    <div class="stat-item"><div class="num">8</div><div class="label">材料文件</div></div>
-    <div class="stat-item"><div class="num">2400+</div><div class="label">数字人形象</div></div>
-    <div class="stat-item"><div class="num">800+</div><div class="label">音色库</div></div>
-  </div>
-
-  <!-- ── 产品目录 ── -->
-  <div class="section-title">产品材料目录</div>
-  <div class="section-desc">各产品线完整材料索引，含一页纸、展示页等</div>
-  <div class="card-grid">
-    <a href="产品材料目录-数字人直播.html" class="card">
-      <div class="card-tag">PRODUCT</div>
-      <div class="card-title">数字人直播</div>
-      <div class="card-desc">7×24h 全天候 AI 数字人直播解决方案，支持真人克隆、AI 脚本、智能问答、商品展示等核心能力。</div>
-      <div class="card-meta">含 3 个文件 · 一页纸 + 展示页 + 目录</div>
-    </a>
-    <a href="产品材料目录-数字人实时互动.html" class="card">
-      <div class="card-tag">PRODUCT</div>
-      <div class="card-title">数字人实时互动</div>
-      <div class="card-desc">实时对话型数字人解决方案，适用于展厅接待、在线客服、虚拟主播等场景。</div>
-      <div class="card-meta">含 2 个文件 · 一页纸 + 目录</div>
-    </a>
-    <a href="产品材料目录-数字人短视频.html" class="card">
-      <div class="card-tag">PRODUCT</div>
-      <div class="card-title">数字人短视频</div>
-      <div class="card-desc">AI 批量生成高质量数字人口播短视频，适合品牌营销、知识分享、产品种草等。</div>
-      <div class="card-meta">含 2 个文件 · 一页纸 + 目录</div>
-    </a>
-  </div>
-
-  <!-- ── 产品展示页 ── -->
-  <div class="section-title">线上展示页</div>
-  <div class="section-desc">可直接对外分享的完整产品介绍页面</div>
-  <div class="mini-grid">
-    <a href="百度一镜·数字人直播_线上展示页.html" class="mini-card">
-      <div class="icon-box">📺</div>
-      <div class="mini-info">
-        <div class="mini-title">数字人直播 · 展示页</div>
-        <div class="mini-desc">完整产品展示，含演示、能力、定价、行业</div>
-      </div>
-    </a>
-  </div>
-
-  <!-- ── 一页纸概览 ── -->
-  <div class="section-title">一页纸概览</div>
-  <div class="section-desc">三款产品的快速概览页，适合打印或邮件发送</div>
-  <div class="mini-grid">
-    <a href="百度一镜·数字人直播_一页纸.html" class="mini-card">
-      <div class="icon-box">📄</div>
-      <div class="mini-info">
-        <div class="mini-title">数字人直播 · 一页纸</div>
-        <div class="mini-desc">直播产品核心卖点与参数速览</div>
-      </div>
-    </a>
-    <a href="百度一镜·数字人实时互动_一页纸.html" class="mini-card">
-      <div class="icon-box">💬</div>
-      <div class="mini-info">
-        <div class="mini-title">数字人实时互动 · 一页纸</div>
-        <div class="mini-desc">实时互动产品核心卖点与参数速览</div>
-      </div>
-    </a>
-    <a href="百度一镜·数字人短视频_一页纸.html" class="mini-card">
-      <div class="icon-box">🎬</div>
-      <div class="mini-info">
-        <div class="mini-title">数字人短视频 · 一页纸</div>
-        <div class="mini-desc">短视频产品核心卖点与参数速览</div>
-      </div>
-    </a>
-  </div>
-
+<div class="grid">
+<a href="产品材料目录-数字人直播.html" class="card">
+<div class="icon">📺</div>
+<h2>数字人直播</h2>
+<p>7×24h 全天候 AI 数字人直播解决方案</p>
+<div class="meta">2 个成品 · 含展示页 · 进目录页 →</div>
+</a>
+<a href="产品材料目录-数字人实时互动.html" class="card">
+<div class="icon">💬</div>
+<h2>数字人实时互动</h2>
+<p>实时对话型数字人，展厅接待 / 在线客服 / 虚拟主播</p>
+<div class="meta">1 个成品 · 更多规划中 · 进目录页 →</div>
+</a>
+<a href="产品材料目录-数字人短视频.html" class="card">
+<div class="icon">🎬</div>
+<h2>数字人短视频</h2>
+<p>AI 批量生成高质量数字人口播短视频</p>
+<div class="meta">1 个成品 · 更多规划中 · 进目录页 →</div>
+</a>
 </div>
-
-<div class="footer">
-  百度一镜 · 企业级 AI 数字人解决方案 &nbsp;|&nbsp; 让增长，更简单
 </div>
-
+<div class="footer">百度一镜 · 让增长，更简单</div>
 </body>
 </html>
