@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SA团队工作规划 — TOB数字人业务协同全景</title>
+    <style>
+        :root {
+            --primary: #1a3a6b;
+            --primary-light: #e8eef7;
+            --accent: #d43f52;
+            --green: #0d9488;
+            --green-light: #eef9f8;
+            --amber: #d97706;
+            --amber-light: #fef9ec;
+            --purple: #7c3aed;
+            --teal: #0891b2;
+            --gray-50: #f8fafb;
+            --gray-100: #f0f2f4;
+            --gray-200: #e2e5e9;
+            --gray-300: #c8cdd3;
+            --gray-500: #6b7380;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --radius: 8px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.6;
+        }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+        .header {
+            background: #1e40af;
+            color: #fff; padding: 48px 0 36px;
+        }
+        .header .breadcrumb { font-size: 13px; opacity: .7; margin-bottom: 12px; }
+        .header h1 { font-size: 30px; font-weight: 700; letter-spacing: .5px; }
+        .header .sub { font-size: 16px; opacity: .85; margin-top: 6px; }
+        .header .meta-pills { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+        .header .pill { background: rgba(255,255,255,.12); border-radius: 20px; padding: 4px 14px; font-size: 13px; }
+        .kpi-bar { background: #fff; border-bottom: 1px solid var(--gray-200); padding: 20px 0; }
+        .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+        .kpi-item { text-align: center; padding: 8px; }
+        .kpi-item .num { font-size: 26px; font-weight: 700; color: var(--primary); }
+        .kpi-item .num.accent { color: var(--accent); }
+        .kpi-item .num.green { color: var(--green); }
+        .kpi-item .num.amber { color: var(--amber); }
+        .kpi-item .label { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
+        .kpi-item .sub-label { font-size: 11px; color: var(--gray-300); }
+        .nav-tabs {
+            background: #fff; border-bottom: 1px solid var(--gray-200);
+            display: flex; gap: 0; overflow-x: auto; position: sticky; top: 0; z-index: 10;
+        }
+        .nav-tabs a {
+            display: block; padding: 14px 22px; font-size: 14px; font-weight: 500;
+            color: var(--gray-500); text-decoration: none; white-space: nowrap;
+            border-bottom: 2px solid transparent; transition: all .15s;
+        }
+        .nav-tabs a:hover { color: var(--primary); background: var(--gray-50); }
+        .nav-tabs a.active { color: var(--primary); border-bottom-color: var(--primary); }
+        .section { padding: 44px 0; border-bottom: 1px solid var(--gray-200); }
+        .section:last-child { border-bottom: none; }
+        .section-title { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+        .section-desc { color: var(--gray-500); font-size: 14px; margin-bottom: 24px; }
+        .team-overview { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+        .team-overview.col3 { grid-template-columns: 1fr 1fr 1fr; }
+        .team-card { background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 20px 24px; }
+        .team-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 10px; }
+        .team-card .row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px; border-bottom: 1px solid var(--gray-100); }
+        .team-card .row:last-child { border-bottom: none; }
+        .team-card .row .val { font-weight: 600; }
+        .team-card.highlight { border-left: 3px solid var(--primary); background: var(--primary-light); }
+        .rel-map { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .rel-card { background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 20px 22px; transition: box-shadow .15s; }
+        .rel-card:hover { box-shadow: 0 4px 14px rgba(0,0,0,.06); }
+        .rel-card .rel-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .rel-card .rel-header .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+        .rel-card .rel-header h4 { font-size: 15px; font-weight: 600; }
+        .rel-card .rel-header .tag { font-size: 11px; padding: 1px 8px; border-radius: 10px; background: var(--gray-100); color: var(--gray-500); margin-left: auto; }
+        .rel-card .collab-line { font-size: 13px; color: var(--gray-500); padding: 3px 0; }
+        .plan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+        .plan-card { background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 18px 20px; }
+        .plan-card .phase { font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+        .plan-card ul { padding-left: 16px; font-size: 13px; color: var(--gray-700); }
+        .plan-card ul li { margin-bottom: 4px; line-height: 1.7; }
+        .plan-card.current { border-color: var(--primary); background: var(--primary-light); }
+        .cap-layers { display: flex; flex-direction: column; gap: 12px; }
+        .cap-layer { background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius); overflow: hidden; }
+        .cap-layer-top { display: flex; align-items: center; gap: 12px; padding: 14px 18px; cursor: default; }
+        .cap-layer-top .layer-icon { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; font-weight: 700; flex-shrink: 0; }
+        .cap-layer-top h4 { font-size: 15px; font-weight: 600; }
+        .cap-layer-top .layer-tag { font-size: 12px; color: var(--gray-500); margin-left: auto; }
+        .cap-layer-body { padding: 0 18px 16px; font-size: 13px; color: var(--gray-700); }
+        .cap-layer-body ul { padding-left: 18px; }
+        .cap-layer-body ul li { margin-bottom: 3px; line-height: 1.7; }
+        .sa-spotlight {
+            background: linear-gradient(135deg, #eef2fc 0%, #fdf2f2 100%);
+            border: 2px solid #1a3a6b;
+            border-radius: 12px; padding: 36px 40px; margin-top: 24px;
+        }
+        .sa-spotlight h3 { font-size: 22px; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+        .sa-spotlight h3::before { content: "\2605"; color: #d43f52; font-size: 26px; }
+        .sa-block { margin-bottom: 28px; }
+        .sa-block:last-child { margin-bottom: 0; }
+        .sa-block h4 { font-size: 16px; font-weight: 600; margin-bottom: 8px; color: #1e40af; }
+        .sa-block ul, .sa-block p { font-size: 14px; line-height: 1.8; color: #374151; }
+        .sa-block ul { padding-left: 20px; list-style: disc; }
+        .sa-block ul li { margin-bottom: 4px; }
+        .data-table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 12px; }
+        .data-table th {
+            text-align: left; padding: 10px 12px; background: #f0f2f4;
+            font-weight: 600; font-size: 13px; color: #374151;
+            border-bottom: 2px solid #e2e5e9;
+        }
+        .data-table td { padding: 10px 12px; border-bottom: 1px solid #f0f2f4; }
+        .data-table tr:hover td { background: #f8fafb; }
+        .capability-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 12px; margin-top: 8px;
+        }
+        .cap-card {
+            background: #fff; border: 1px solid #e2e5e9; border-radius: 8px;
+            padding: 14px 16px;
+        }
+        .cap-card .cap-title { font-weight: 600; font-size: 14px; color: #1e40af; margin-bottom: 2px; }
+        .cap-card .cap-desc { font-size: 13px; color: #6b7380; line-height: 1.6; }
+        .schedule-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+        .sched-card { background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 14px 16px; }
+        .sched-card .freq { font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+        .sched-card .desc { font-size: 13px; color: var(--gray-700); }
+        .sched-card .time { font-size: 12px; color: var(--gray-500); margin-top: 4px; }
+        .kpi-tbl { width: 100%; border-collapse: collapse; font-size: 14px; }
+        .kpi-tbl th { text-align: left; padding: 10px 12px; background: var(--gray-100); font-weight: 600; font-size: 13px; color: var(--gray-700); border-bottom: 2px solid var(--gray-200); }
+        .kpi-tbl td { padding: 10px 12px; border-bottom: 1px solid var(--gray-100); }
+        .kpi-tbl tr:hover td { background: var(--gray-50); }
+        .footer { text-align: center; padding: 28px 0; color: var(--gray-500); font-size: 13px; }
+        @media (max-width: 768px) {
+            .header { padding: 32px 0 24px; }
+            .header h1 { font-size: 22px; }
+            .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+            .team-overview, .team-overview.col3 { grid-template-columns: 1fr; }
+            .rel-map { grid-template-columns: 1fr; }
+            .nav-tabs a { padding: 10px 14px; font-size: 13px; }
+        }
+        @media print {
+            .header { background: #1e40af !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .nav-tabs { display: none; }
+        }
+    </style>
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <div class="breadcrumb">SA团队负责人视角 · 内部管理参考</div>
+        <h1>SA团队工作规划 &amp; 协同关系全景</h1>
+        <p class="sub">数字人直播 + 短漫剧 · TOB业务 · 2026年Q3</p>
+        <div class="meta-pills">
+            <span class="pill">👥 SA团队 7人</span>
+            <span class="pill">🔧 交付外包 9人</span>
+            <span class="pill">🎯 季度目标 ¥448 万</span>
+        </div>
+    </div>
+</header>
+<!-- KPI Bar -->
+<div class="kpi-bar">
+    <div class="container">
+        <div class="kpi-grid">
+            <div class="kpi-item"><div class="num">285<span style="font-size:14px;opacity:.5">万</span></div><div class="label">国内直播 · 季度</div></div>
+            <div class="kpi-item"><div class="num accent">96<span style="font-size:14px;opacity:.5">万</span></div><div class="label">出海直播 · 季度</div></div>
+            <div class="kpi-item"><div class="num green">67<span style="font-size:14px;opacity:.5">万</span></div><div class="label">短漫剧 · 季度</div></div>
+            <div class="kpi-item"><div class="num" style="font-size:30px;">448<span style="font-size:14px;opacity:.5">万</span></div><div class="label">团队季度总目标</div></div>
+            <div class="kpi-item" style="border-left:1px solid var(--gray-200);"><div class="num">91<span style="font-size:14px;opacity:.5">万</span></div><div class="label">7月 · 国内直播</div></div>
+            <div class="kpi-item"><div class="num accent">21<span style="font-size:14px;opacity:.5">万</span></div><div class="label">7月 · 出海</div></div>
+            <div class="kpi-item"><div class="num green">2<span style="font-size:14px;opacity:.5">万</span></div><div class="label">7月 · 短漫剧</div></div>
+            <div class="kpi-item"><div class="num amber">114<span style="font-size:14px;opacity:.5">万</span></div><div class="label">7月合计</div><div class="sub-label">占季度25%</div></div>
+        </div>
+    </div>
+</div>
+<!-- Nav -->
+<nav class="nav-tabs" id="nav">
+    <div class="container" style="display:flex;gap:0;padding:0 24px;max-width:1280px;margin:0 auto;">
+        <a href="#team" class="active">团队构成</a>
+        <a href="#relation">协同关系</a>
+        <a href="#sa-role">岗位定位</a>
+        <a href="#workplan">工作规划</a>
+        <a href="#schedule">例行节奏</a>
+        <a href="#kpi">考核体系</a>
+    </div>
+</nav>
+<main class="container">
+<!-- ===== 1. 团队构成 ===== -->
+<section class="section" id="team">
+    <h2 class="section-title">📋 SA团队构成与覆盖模型</h2>
+    <p class="section-desc">解决方案总监 + 6名SA + 9名交付外包，覆盖两条产品线、国内+出海双市场。SA以"行业线"和"产品线"矩阵式分工，每人既是销售搭档又是行业专家。</p>
+    <div class="team-overview">
+        <div class="team-card highlight">
+            <h4>SA团队（7人）</h4>
+            <div class="row"><span>解决方案总监</span><span class="val">1 人</span></div>
+            <div class="row"><span>国内直播SA（直属）</span><span class="val">4 人</span></div>
+            <div class="row"><span>出海SA（直属，含1人复用做短漫剧）</span><span class="val">2 人</span></div>
+        </div>
+        <div class="team-card">
+            <h4>交付外包（9人）</h4>
+            <div class="row"><span>数字人直播部署实施</span><span class="val">5 人</span></div>
+            <div class="row"><span>出海业务本地化支撑</span><span class="val">2 人</span></div>
+            <div class="row"><span>项目实施机动</span><span class="val">2 人</span></div>
+        </div>
+    </div>
+    <div class="team-overview col3">
+        <div class="team-card">
+            <h4>国内直播SA × 4</h4>
+            <div style="font-size:13px;color:var(--gray-500);line-height:1.7;">
+                各自覆盖1个平台方向（抖音/淘宝/视频号/其他）；每人搭档2-3名销售，平均跟进8-12个在谈项目；共同扛起285万季度目标。
+            </div>
+        </div>
+        <div class="team-card">
+            <h4>出海SA × 2（含短漫剧复用）</h4>
+            <div style="font-size:13px;color:var(--gray-500);line-height:1.7;">
+                专注海外市场（东南亚/中东/拉美），理解TikTok Shop/Shopee等海外直播生态与合规要求；其中1人同时负责短漫剧的方案支撑，面向漫画/短剧制作公司与IP方。共同覆盖96万出海+67万短漫剧，合计163万季度目标。
+            </div>
+        </div>
+        <div class="team-card">
+            <h4>短漫剧SA × 1（复用出海人力）</h4>
+            <div style="font-size:13px;color:var(--gray-500);line-height:1.7;">
+                由出海SA团队中1人同时负责短漫剧的方案支撑，面向漫画/短剧制作公司与IP方；侧重批量生产能力展示与定制化方案输出；覆盖67万季度目标。
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ===== 2. SA协同关系 ===== -->
+<section class="section" id="relation">
+    <h2 class="section-title">🔄 SA与各团队协同关系</h2>
+    <p class="section-desc">SA是TOB业务的"腰部枢纽"，向前接销售拿商机，向后推产品/技术做支撑，向左拉市场造势能，向右托交付保落地。</p>
+    <div class="rel-map">
+        <div class="rel-card">
+            <div class="rel-header"><span class="dot" style="background:#d43f52;"></span><h4>🤝 销售部 (Sales)</h4><span class="tag">最紧密的战场搭档</span></div>
+            <div class="collab-line"><strong>协同模式：</strong>"SA+销售"编队制，1名SA固定搭档2-3名销售。销售负责客户关系与商务谈判，SA负责方案专业度与技术信任。</div>
+            <div class="collab-line"><strong>日常互动：</strong>周一下午联合周会同步项目进展；每次客户拜访前30分钟"预演"；每个商机在客户接触后24小时内SA输出《需求调研纪要》。</div>
+            <div class="collab-line"><strong>价值锚点：</strong>SA的方案质量直接影响赢单率。销售负责"打开门"，SA负责"让人坐下来听"。</div>
+        </div>
+        <div class="rel-card">
+            <div class="rel-header"><span class="dot" style="background:#0d9488;"></span><h4>📱 产品部 (PM)</h4><span class="tag">需求的前哨</span></div>
+            <div class="collab-line"><strong>协同模式：</strong>SA是产品需求的"第一道过滤层"。SA收集客户共性需求与竞品动向，每月输出《需求回传清单》给产品部。</div>
+            <div class="collab-line"><strong>日常互动：</strong>双周一次产品需求对齐会；新产品发布前SA优先获得培训；SA参与产品版验收测试。</div>
+            <div class="collab-line"><strong>价值锚点：</strong>避免"产品闭门造车，SA在外打空枪"。</div>
+        </div>
+        <div class="rel-card">
+            <div class="rel-header"><span class="dot" style="background:#0891b2;"></span><h4>💻 技术研发部 (R&D)</h4><span class="tag">POC与定制化的后方</span></div>
+            <div class="collab-line"><strong>协同模式：</strong>POC/Pilot阶段SA拉起"SA+技术+销售"铁三角，SA定义范围和成功标准，技术负责实际搭建与调试。</div>
+            <div class="collab-line"><strong>日常互动：</strong>每个POC项目每周一次技术站会；SA向技术部发起资源申请需提前48小时。</div>
+            <div class="collab-line"><strong>价值锚点：</strong>SA越专业，技术研发被打断的次数越少。</div>
+        </div>
+        <div class="rel-card">
+            <div class="rel-header"><span class="dot" style="background:#d97706;"></span><h4>🚀 交付与外包团队 (Delivery)</h4><span class="tag">兑现承诺的最后一公里</span></div>
+            <div class="collab-line"><strong>协同模式：</strong>签约后SA与交付做"方案交底"（Handover），SA对交付团队做方案培训。9名外包由交付经理统一调配，SA不直接管理但需对外包交付质量把关。</div>
+            <div class="collab-line"><strong>日常互动：</strong>签约后SA参与交付启动会；交付中需求偏离由SA负责解释修正；验收时SA确认"方案承诺已全部实现"。</div>
+            <div class="collab-line"><strong>价值锚点：</strong>SA的承诺精度 = 交付团队的幸福指数。</div>
+        </div>
+        <div class="rel-card">
+            <div class="rel-header"><span class="dot" style="background:#7c3aed;"></span><h4>🤗 客户成功（SA兼管/CS）</h4><span class="tag">SA直接承接</span></div>
+            <div class="collab-line"><strong>协同模式：</strong>当前阶段没有独立的客户成功部，由SA直接承接客户成功职能。SA负责从签约到续约的全生命周期管理。</div>
+            <div class="collab-line"><strong>日常互动：</strong>SA定期回访客户了解使用情况，主动输出运营优化建议；每月做客户健康度盘点，提前预警流失风险。</div>
+            <div class="collab-line"><strong>价值锚点：</strong>SA从售前到交付再到续约全链条跟进，既保证方案落地质量，又为增购/续费打下信任基础。</div>
+        </div>
+        <div class="rel-card">
+            <div class="rel-header"><span class="dot" style="background:#dc2626;"></span><h4>📢 市场部 (MKT)</h4><span class="tag">弹药供应商</span></div>
+            <div class="collab-line"><strong>协同模式：</strong>核心物料（方案书/一页纸/白皮书/案例集等）当前阶段由SA直接产出，市场部辅助活动策划、宣发推广与物料美化。</div>
+            <div class="collab-line"><strong>日常互动：</strong>SA主导内容输出，市场部协助排版美化与渠道分发；SA作为专家参与沙龙/展会演讲；市场部收集SA常用的客户高频问题制作FAQ。</div>
+            <div class="collab-line"><strong>价值锚点：</strong>SA产出内容的质量直接决定客户专业感知，市场部的宣发放大触达面，二者配合实现"内容即销售"。</div>
+        </div>
+
+        
+    </div>
+</section>
+<!-- ===== 3. SA工作规划 ===== -->
+<section class="section" id="workplan">
+    <h2 class="section-title">📌 SA岗位工作规划</h2>
+    <p class="section-desc">以季度为周期，按"启动 → 攻坚 → 冲刺 → 复盘"四阶段推进。当前为2026年Q3（7-9月），6名SA统一遵循以下节奏，解决方案总监负责全局统筹与重点客户攻坚。</p>
+    <div class="plan-grid">
+        <div class="plan-card current">
+            <div class="phase">📍 当前 · 7月冲刺（第1-5周）</div>
+            <ul>
+                <li>目标：国内直播91万 + 出海21万 + 短漫剧2万 = 114万</li>
+                <li>每人锁定3-5个"本月可签"重点项目，SA与销售排定联合拜访计划</li>
+                <li>国内直播SA主攻电商"暑期档"，出海SA对接TikTok Shop东南亚意向客户</li>
+            </ul>
+        </div>
+        <div class="plan-card">
+            <div class="phase">🔄 启动期（第1-2周）</div>
+            <ul>
+                <li>目标拆解到人，SA与销售编队确认并同步线索池</li>
+                <li>行业方案V2.0更新 + 出海市场调研同步 + 短漫剧Demo环境搭建</li>
+                <li>外包交付团队培训与标准化SOP下发</li>
+            </ul>
+        </div>
+        <div class="plan-card">
+            <div class="phase">⚡ 攻坚期（第3-8周）</div>
+            <ul>
+                <li>每SA支持8-12个在跟项目，周均2-3次客户拜访/演示</li>
+                <li>每周五输出《项目进展与卡点同步表》，完成至少3份重点标书</li>
+                <li>启动至少3个POC项目，收集共性需求回传产品部</li>
+            </ul>
+        </div>
+        <div class="plan-card">
+            <div class="phase">🏃 冲刺期（第9-11周）</div>
+            <ul>
+                <li>配合销售季度末关单冲刺，支持所有待签约项目</li>
+                <li>完成出海+短漫剧行业方案V1.0，输出1份竞品深度分析报告</li>
+                <li>协助已签约客户平稳交付过渡，检视季度目标完成情况</li>
+            </ul>
+        </div>
+        <div class="plan-card">
+            <div class="phase">📊 复盘期（第12周）</div>
+            <ul>
+                <li>季度赢单复盘：成功率分析、丢单原因四象限归因</li>
+                <li>方案物料库更新，每位SA输出个人季度复盘报告</li>
+                <li>Q4目标预沟通 + 外包交付团队绩效评核与资源调整</li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- ===== 4. SA岗位定位与核心职能 ===== -->
+<section class="section" id="sa-role">
+    <h2 class="section-title">🎯 SA岗位定位与核心职能</h2>
+    <p class="section-desc">SA（解决方案架构师 / 售前工程师）是TOB数字人业务中承上启下的核心角色。以下从角色定位、核心职责两个维度展开。</p>
+
+    <div class="sa-spotlight">
+        <h3>解决方案架构师（SA）— 工作全规划</h3>
+
+        <div class="sa-block">
+            <h4>角色定位</h4>
+            <p>SA是连接"销售→产品→技术→交付/客户成功"的核心枢纽。对内，SA将客户的业务需求转化为可落地的产品方案，并承接从签约到交付再到续约的全生命周期客户成功管理；对外，SA是客户眼中"最懂技术又有商业sense"的信任对象。在当前团队中，7位SA需要覆盖数字人直播（国内+出海）和短漫剧两条产品线及电商、教育、金融、政务四大行业，以"1名SA搭档2-3名销售"的编队模式运作。</p>
+        </div>
+
+        <div class="sa-block">
+            <h4>核心职责（7大模块）</h4>
+            <div class="capability-grid">
+                <div class="cap-card">
+                    <div class="cap-title">① 客户需求洞察</div>
+                    <div class="cap-desc">参与客户初次拜访与深度访谈，理解客户的业务场景、痛点、决策链与预算范围，输出《客户需求调研纪要》，24小时内同步销售+产品侧。</div>
+                </div>
+                <div class="cap-card">
+                    <div class="cap-title">② 方案设计与产出</div>
+                    <div class="cap-desc">针对客户需求，输出《技术方案书》《解决方案PPT》《项目建议书》。包含整体架构、实施路径、投入产出测算。核心物料由SA直接产出，市场部辅助美化。</div>
+                </div>
+                <div class="cap-card">
+                    <div class="cap-title">③ 产品演示（Demo）</div>
+                    <div class="cap-desc">面向客户决策层/技术层进行产品场景化演示，按客户行业定制Demo流程，回答技术/业务层面的追问与质疑。</div>
+                </div>
+                <div class="cap-card">
+                    <div class="cap-title">④ POC 管理</div>
+                    <div class="cap-desc">对意向客户推进概念验证（Proof of Concept），协调内外部资源制定POC范围、成功标准与时间表，输出《POC总结报告》。</div>
+                </div>
+                <div class="cap-card">
+                    <div class="cap-title">⑤ 招投标支持</div>
+                    <div class="cap-desc">负责标书编写（技术部分）、述标答辩、答疑澄清。配合销售完成投标全流程。</div>
+                </div>
+                <div class="cap-card">
+                    <div class="cap-title">⑥ 需求回传与行业沉淀</div>
+                    <div class="cap-desc">将客户共性需求/竞品动向回传至产品部，每个季度输出至少1份《行业解决方案白皮书》或《竞品对标报告》。</div>
+                </div>
+                <div class="cap-card">
+                    <div class="cap-title">⑦ 客户成功（SA兼管）</div>
+                    <div class="cap-desc">负责已签约客户的日常维护与使用监控，包括客户培训、异常预警、续费/增购推进、客户证言收集。核心目标：季度续费率≥90%，将流失消灭在萌芽期。</div>
+                </div>
+            </div>
+        </div>
+        <div class="sa-block">
+            <h4>能力要求（4层模型）</h4>
+            <div class="capability-grid">
+                <div class="cap-card" style="border-left: 3px solid #1a56db;">
+                    <div class="cap-title">第一层 · 产品与技术能力</div>
+                    <div class="cap-desc">
+                        • 深入理解百度一镜产品的功能边界、技术架构、部署方式（数字人直播+短漫剧）<br>
+                        • 掌握数字人行业基础知识（NOVA技术/文心大模型/多模态交互等）<br>
+                        • 了解常见集成方案（API对接/SDK嵌入/Webhook等）<br>
+                        • 能独立搭建Demo环境、调试常见异常
+                    </div>
+                </div>
+                <div class="cap-card" style="border-left: 3px solid #e8484a;">
+                    <div class="cap-title">第二层 · 业务与行业认知</div>
+                    <div class="cap-desc">
+                        • 至少精通2个行业（推荐电商+教育 或 金融+政务）的业务逻辑与监管要求<br>
+                        • 能用客户语言而非技术术语描述方案价值<br>
+                        • 能进行ROI测算与TCO对比，给客户算出"省多少/赚多少"<br>
+                        • 关注数字人赛道竞品动态（硅基智能/商汤如影/腾讯智影/HeyGen等）
+                    </div>
+                </div>
+                <div class="cap-card" style="border-left: 3px solid #f59e0b;">
+                    <div class="cap-title">第三层 · 沟通与协作能力</div>
+                    <div class="cap-desc">
+                        • 极强的文档输出力：逻辑清晰、排版专业、一页纸见真章<br>
+                        • 结构化表达能力：能在30分钟内讲清一个复杂方案<br>
+                        • 跨部门推动力：拉动产品/技术/交付资源为客户服务<br>
+                        • 强抗压与应变力：应对技术质疑、竞品PK、价格异议等场景
+                    </div>
+                </div>
+                <div class="cap-card" style="border-left: 3px solid #10b981;">
+                    <div class="cap-title">第四层 · 商业意识</div>
+                    <div class="cap-desc">
+                        • 理解TOB销售全链路，知道什么时候该推、什么时候该收<br>
+                        • 有"解决方案即销售武器"的意识，能通过方案质量推动赢单<br>
+                        • 能预判客户决策风险（预算/合规/内部博弈），并在方案层面提前规避<br>
+                        • 考核指标：参与赢单率 ≥ 55% · 方案满意度评分 ≥ 4.3/5
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sa-block">
+            <h4>SA必备工具箱</h4>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>类别</th>
+                        <th>工具/模板</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>方案产出</td><td>客户需求调研纪要模板</td><td>初次拜访后24h内输出，同步给销售+产品</td></tr>
+                    <tr><td>方案产出</td><td>技术方案书模板（分行业）</td><td>含标准架构图、部署方案、实施计划、SLA</td></tr>
+                    <tr><td>方案产出</td><td>解决方案PPT母版</td><td>百度一镜视觉规范，按场景有4种布局</td></tr>
+                    <tr><td>演示</td><td>行业化Demo脚本</td><td>按电商/教育/金融/政务各1份标准化演示流程</td></tr>
+                    <tr><td>POC</td><td>POC立项与评审模板</td><td>含目标、范围、成功标准、资源清单、时间表</td></tr>
+                    <tr><td>标书</td><td>标书技术部分模板</td><td>含常见应答话术、技术偏离表、资质清单</td></tr>
+                    <tr><td>竞品</td><td>竞品对比报告框架</td><td>按功能/价格/技术/服务四维对比</td></tr>
+                    <tr><td>复盘</td><td>丢单分析模板</td><td>按客户/竞品/方案/价格四象限归因</td></tr>
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+</section>
+<!-- ===== 5. 例行工作节奏 ===== -->
+<section class="section" id="schedule">
+    <h2 class="section-title">⏱️ SA例行工作节奏</h2>
+    <p class="section-desc">SA的工作需要"周期性推进"与"突发事件响应"并行。以下为标准化的例行节奏框架，作为团队管理指南。</p>
+    <div class="schedule-grid">
+        <div class="sched-card"><div class="freq">📅 每日</div><div class="desc">晨会15分钟（总监主持，快速过当日计划与卡点）；跟进在跟客户的即时需求；更新CRM/项目看板中的商机状态。</div><div class="time">建议时长：30-45分钟</div></div>
+        <div class="sched-card"><div class="freq">📅 每周</div><div class="desc">周一上午：SA团队周会（项目进展+卡点+资源协调）；周一下午：与销售组的联合周会；每周五：输出《项目进展与卡点同步表》。</div><div class="time">固定会议：周一全天为内部同步日</div></div>
+        <div class="sched-card"><div class="freq">📅 双周</div><div class="desc">与产品部的需求对齐会（SA回传客户需求，产品同步Roadmap）；行业方案编写/更新的集中推进时间。</div><div class="time">建议周三下午</div></div>
+        <div class="sched-card"><div class="freq">📅 每月</div><div class="desc">月度目标Review + 下月计划对齐；客户健康度Review（SA自行盘点，总监统筹）；外包交付团队月度绩效评估。</div><div class="time">每月最后一周周四</div></div>
+        <div class="sched-card"><div class="freq">📅 季度</div><div class="desc">季度复盘（赢单/丢单分析+个人成长复盘）；行业方案白皮书输出；竞品深度分析报告更新；下季度OKR对齐与资源规划。</div><div class="time">季度最后一周</div></div>
+    </div>
+</section>
+<!-- ===== 6. 考核体系 ===== -->
+<section class="section" id="kpi">
+    <h2 class="section-title">📊 SA考核体系（团队负责人管理视角）</h2>
+    <p class="section-desc">考核分"结果型指标"与"能力型指标"两大类，按季度滚动。总监使用此体系评估每个SA的表现并制定改进计划。</p>
+    <table class="kpi-tbl">
+        <thead><tr><th>类别</th><th>指标</th><th>目标值</th><th>权重</th><th>数据来源</th></tr></thead>
+        <tbody>
+            <tr><td rowspan="2" style="vertical-align:middle;font-weight:600;">结果型<br><span style="font-size:12px;font-weight:400;color:var(--gray-500);">50%</span></td><td>参与赢单金额</td><td>季度签约 ≥ 个人目标80%</td><td>30%</td><td>CRM/财务确认</td></tr>
+            <tr><td>参与赢单率</td><td>≥ 55%</td><td>20%</td><td>CRM系统</td></tr>
+            <tr><td rowspan="3" style="vertical-align:middle;font-weight:600;">过程型<br><span style="font-size:12px;font-weight:400;color:var(--gray-500);">25%</span></td><td>方案/标书产出</td><td>≥ 12份</td><td>10%</td><td>文档归档</td></tr>
+            <tr><td>客户拜访与演示</td><td>≥ 30次（含线上/线下）</td><td>10%</td><td>CRM记录</td></tr>
+            <tr><td>POC推进完成率</td><td>≥ 80%按时完成</td><td>5%</td><td>POC跟踪表</td></tr>
+            <tr><td rowspan="2" style="vertical-align:middle;font-weight:600;">能力型<br><span style="font-size:12px;font-weight:400;color:var(--gray-500);">15%</span></td><td>行业方案沉淀</td><td>每季度 ≥ 1份方案/白皮书</td><td>8%</td><td>文档评审</td></tr>
+            <tr><td>客户方案满意度</td><td>≥ 4.3 / 5</td><td>7%</td><td>满意度问卷</td></tr>
+            <tr><td rowspan="2" style="vertical-align:middle;font-weight:600;">协作型<br><span style="font-size:12px;font-weight:400;color:var(--gray-500);">10%</span></td><td>销售搭档反馈</td><td>≥ 4 / 5</td><td>5%</td><td>人事部收集</td></tr>
+            <tr><td>交付转交质量</td><td>≥ 4 / 5</td><td>5%</td><td>交付经理</td></tr>
+        </tbody>
+    </table>
+    <div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div style="background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius);padding:16px 20px;">
+            <h4 style="font-size:14px;font-weight:600;margin-bottom:6px;">✅ 晋升触发条件</h4>
+            <div style="font-size:13px;line-height:1.8;">· 连续两季度综合评分 ≥ 85分 → 晋升资格<br>· 独立主导行业方案输出获客户认可 → 资深SA<br>· 带教新人通过试用期 → 管理序列倾斜</div>
+        </div>
+        <div style="background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius);padding:16px 20px;">
+            <h4 style="font-size:14px;font-weight:600;margin-bottom:6px;">⚠️ 需管理者介入的信号</h4>
+            <div style="font-size:13px;line-height:1.8;">· 连续两月赢单率 < 40% → 辅导对齐<br>· 销售搭档连续两月 < 3.5分 → 配对调整<br>· 交付转交出现2次以上严重偏差 → 流程复盘</div>
+        </div>
+    </div>
+</section>
+</main>
+<footer class="footer">
+    <div class="container">
+        <p>SA团队负责人内部管理文档 · 数字人直播 + 短漫剧业务线 · 2026年Q3</p>
+        <p style="margin-top:4px;opacity:.7;">目标448万，从7月的114万开始。</p>
+    </div>
+</footer>
+</body>
+</html>
