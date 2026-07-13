@@ -252,7 +252,7 @@ for (let i = 1; i <= TOTAL_SLIDES; i++) {
   frame.className = 'slide-frame';
 
   const img = document.createElement('img');
-  img.dataset.src = SLIDE_IMAGE(i); if (i === 1) img.src = SLIDE_IMAGE(i); else img.src = '';
+  img.dataset.src = SLIDE_IMAGE(i); if (i === 1) img.src = SLIDE_IMAGE(i);
   img.alt = `第 ${i} 页`;
   img.draggable = false;
   frame.appendChild(img);
@@ -353,7 +353,7 @@ function goToSlide(n) {
   pauseAllVideos(currentSlide);
   // Lazy-load slide image on navigate
   var _nImg = document.getElementById('slide-'+n).querySelector('img');
-  if (_nImg && _nImg.dataset.src && !_nImg.src) _nImg.src = _nImg.dataset.src;
+  if (_nImg && _nImg.dataset.src) _nImg.src = _nImg.dataset.src;
 
   document.getElementById(`slide-${currentSlide}`).style.display = 'none';
   document.getElementById(`slide-${n}`).style.display = '';
@@ -367,6 +367,34 @@ function goToSlide(n) {
 
 function nextSlide() { goToSlide(currentSlide + 1); }
 function prevSlide() { goToSlide(currentSlide - 1); }
+
+// Load first 5 thumbnails immediately so sidebar isn't blank
+for (var _ti = 0; _ti < 5 && _ti < sidebarThumbs.children.length; _ti++) {
+  var _tImg = sidebarThumbs.children[_ti].querySelector('img');
+  if (_tImg && _tImg.dataset.src && !_tImg.src) _tImg.src = _tImg.dataset.src;
+}
+
+// === THUMBNAIL SCROLL LAZY LOAD ===
+// Load thumbnail images when they scroll into view
+var thumbLoadTimer;
+sidebarThumbs.addEventListener('scroll', function() {
+  clearTimeout(thumbLoadTimer);
+  thumbLoadTimer = setTimeout(function() {
+    document.querySelectorAll('#sidebarThumbs img[data-src]').forEach(function(img) {
+      var rect = img.getBoundingClientRect();
+      var sRect = sidebarThumbs.getBoundingClientRect();
+      // Load if image is within 300px of visible area
+      if (rect.bottom > sRect.top - 300 && rect.top < sRect.bottom + 300) {
+        img.src = img.dataset.src;
+        img.removeAttribute('data-src');
+      }
+    });
+  }, 100);
+});
+// Also load visible thumbnails on first paint
+setTimeout(function() {
+  sidebarThumbs.dispatchEvent(new Event('scroll'));
+}, 200);
 
 // === KEYBOARD ===
 document.addEventListener('keydown', (e) => {
@@ -389,9 +417,8 @@ for (let i = 1; i <= TOTAL_SLIDES; i++) {
   item.addEventListener('click', () => goToSlide(i));
 
   const img = document.createElement('img');
-  img.dataset.src = SLIDE_IMAGE(i); if (i === 1) img.src = SLIDE_IMAGE(i); else img.src = '';
+  img.dataset.src = SLIDE_IMAGE(i); if (i === 1) img.src = SLIDE_IMAGE(i);
   img.alt = `第 ${i} 页`;
-  img.loading = 'lazy';
   item.appendChild(img);
 
   const num = document.createElement('div');
