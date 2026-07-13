@@ -280,7 +280,7 @@ for (let i = 1; i <= TOTAL_SLIDES; i++) {
       embed.style.height = vc.h + '%';
 
       const video = document.createElement('video');
-      video.src = `videos/${vc.file}`;
+      video.src = `https://digital-human-ppt-videos.bj.bcebos.com/live-ppt-videos/${vc.file}`;
       // Not muted — playback triggered by user click, browser allows audio
       video.playsInline = true;
       video.preload = 'none';
