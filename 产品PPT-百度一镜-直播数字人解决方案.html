@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>百度一镜-直播数字人解决方案</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #000; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+
+  /* Layout: sidebar on left + slide on right */
+  .layout { display: flex; width: 100%; height: 100%; }
+
+  /* Left sidebar — thumbnails, never covers slide content */
+  .sidebar {
+    width: 140px;
+    min-width: 140px;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex; flex-direction: column;
+    z-index: 40;
+    overflow: hidden;
+  }
+
+  .sidebar-header {
+    padding: 14px 10px 8px;
+    color: rgba(255,255,255,0.5);
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    flex-shrink: 0;
+  }
+
+  .sidebar-thumbs {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px;
+    display: flex; flex-direction: column;
+    gap: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.15) transparent;
+  }
+  .sidebar-thumbs::-webkit-scrollbar { width: 3px; }
+  .sidebar-thumbs::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+
+  .sidebar-thumbs .thumb-item {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    opacity: 0.45;
+    transition: opacity 0.2s, outline 0.2s;
+    outline: 1.5px solid transparent;
+    outline-offset: -1.5px;
+    flex-shrink: 0;
+  }
+  .sidebar-thumbs .thumb-item:hover { opacity: 0.75; }
+  .sidebar-thumbs .thumb-item.active {
+    opacity: 1;
+    outline-color: rgba(255,255,255,0.7);
+  }
+  .sidebar-thumbs .thumb-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .sidebar-thumbs .thumb-item .thumb-num {
+    position: absolute;
+    bottom: 2px; right: 3px;
+    font-size: 9px;
+    color: rgba(255,255,255,0.7);
+    background: rgba(0,0,0,0.5);
+    padding: 0 4px;
+    border-radius: 2px;
+    line-height: 14px;
+  }
+
+  .sidebar-footer {
+    padding: 8px 10px 14px;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    flex-shrink: 0;
+  }
+  .sidebar-footer .page-num {
+    color: rgba(255,255,255,0.45);
+    font-size: 11px;
+    letter-spacing: 0.3px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Slide area: fills remaining space */
+  .slide-area {
+    flex: 1;
+    position: relative;
+    background: #000;
+    overflow: hidden;
+  }
+
+  /* Each slide layers on top of each other */
+  .slide-container {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .slide-frame {
+    position: relative;
+    width: min(100%, 177.78vh);
+    height: min(100vh, 56.25vw);
+    background: #fff;
+    overflow: hidden;
+  }
+
+  .slide-frame img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: contain;
+    display: block;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* Video positioned exactly on the slide */
+  .video-embed {
+    position: absolute;
+    cursor: pointer;
+    z-index: 10;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .video-embed video {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    display: block;
+    pointer-events: none;
+  }
+
+  .video-embed .play-btn {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(0,0,0,0.5);
+    border: 2.5px solid rgba(255,255,255,0.8);
+    cursor: pointer; pointer-events: none;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, opacity 0.3s;
+    z-index: 11;
+  }
+  .video-embed .play-btn::after {
+    content: ''; display: block;
+    width: 0; height: 0;
+    border-left: 14px solid #fff;
+    border-top: 9px solid transparent;
+    border-bottom: 9px solid transparent;
+    margin-left: 3px;
+  }
+  .video-embed.playing .play-btn {
+    opacity: 0; pointer-events: none;
+  }
+  .video-embed:hover .play-btn {
+    background: rgba(0,0,0,0.7);
+  }
+
+  /* Navigation zones on slide (transparent — original style) */
+  .nav-zone-left, .nav-zone-right {
+    position: absolute; top: 0; bottom: 0;
+    z-index: 1;
+    cursor: pointer;
+  }
+  .nav-zone-left { left: 0; width: 25%; }
+  .nav-zone-right { right: 0; width: 25%; }
+
+  @media (max-width: 640px) {
+    .sidebar { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+  <!-- Left sidebar: thumbnail previews -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-header">预览</div>
+    <div class="sidebar-thumbs" id="sidebarThumbs"></div>
+    <div class="sidebar-footer">
+      <div class="page-num" id="sidebarPage">1 / 21</div>
+    </div>
+  </div>
+
+  <!-- Slide area -->
+  <div class="slide-area" id="slideArea">
+    <div id="slides-container"></div>
+  </div>
+</div>
+
+<script>
+// === CONFIGURATION ===
+const TOTAL_SLIDES = 21;
+const SLIDE_IMAGE = (n) => `slides/百度一镜-直播数字人解决方案_${String(n).padStart(2,'0')}.png`;
+
+const VIDEO_CONFIG = {
+  8:  [
+    { file: 'slide08_v1.mp4',  left: 65.00, top: 30.77, w: 20.23, h: 77.92 },
+    { file: 'slide08_v2.mp4',  left: 40.24, top: 30.80, w: 20.40, h: 78.58 }
+  ],
+  9:  [
+    { file: 'slide09_v1.mp4',  left: 44.30, top: 25.95, w: 52.54, h: 61.37 }
+  ],
+  10: [
+    { file: 'slide10_v1.mp4',  left: 74.24, top: 30.71, w: 15.78, h: 60.55 },
+    { file: 'slide10_v2.mp4',  left: 47.26, top: 30.74, w: 15.68, h: 60.42 }
+  ],
+  13: [
+    { file: 'slide13_v1.mov',  left: 49.72, top: 25.13, w: 14.33, h: 55.08 },
+    { file: 'slide13_v2.mp4',  left: 66.64, top: 25.13, w: 14.33, h: 55.08 },
+    { file: 'slide13_v3.mp4',  left: 83.12, top: 25.13, w: 14.33, h: 55.08 }
+  ],
+  14: [
+    { file: 'slide14_v1.mp4',  left: 39.58, top: 52.34, w: 19.22, h: 73.88 },
+    { file: 'slide14_v2.mp4',  left: 63.37, top: 52.35, w: 18.79, h: 72.37 }
+  ],
+  16: [
+    { file: 'slide16_v1.mp4',  left: 63.00, top: 22.39, w: 22.49, h: 86.47 }
+  ],
+  17: [
+    { file: 'slide17_v1.mp4',  left: 19.80, top: 34.90, w: 60.17, h: 48.78 }
+  ],
+  18: [
+    { file: 'slide18_v1.mp4',  left: 35.19, top: 23.28, w: 18.23, h: 71.59 }
+  ]
+};
+
+let currentSlide = 1;
+let isTransitioning = false;
+let videoElements = {};
+
+// === BUILD SLIDES ===
+const container = document.getElementById('slides-container');
+
+for (let i = 1; i <= TOTAL_SLIDES; i++) {
+  const slideDiv = document.createElement('div');
+  slideDiv.className = 'slide-container';
+  slideDiv.id = `slide-${i}`;
+  if (i !== 1) slideDiv.style.display = 'none';
+
+  const frame = document.createElement('div');
+  frame.className = 'slide-frame';
+
+  const img = document.createElement('img');
+  img.src = SLIDE_IMAGE(i);
+  img.alt = `第 ${i} 页`;
+  img.draggable = false;
+  frame.appendChild(img);
+
+  // Navigation zones — original style click-to-navigate on slide edges
+  const navLeft = document.createElement('div');
+  navLeft.className = 'nav-zone-left';
+  navLeft.addEventListener('click', (e) => { e.stopPropagation(); goToSlide(currentSlide - 1); });
+  frame.appendChild(navLeft);
+
+  const navRight = document.createElement('div');
+  navRight.className = 'nav-zone-right';
+  navRight.addEventListener('click', (e) => { e.stopPropagation(); goToSlide(currentSlide + 1); });
+  frame.appendChild(navRight);
+
+  // Videos positioned exactly on the slide
+  if (VIDEO_CONFIG[i]) {
+    videoElements[i] = [];
+    VIDEO_CONFIG[i].forEach((vc, vi) => {
+      const embed = document.createElement('div');
+      embed.className = 'video-embed';
+      embed.style.left = vc.left + '%';
+      embed.style.top = vc.top + '%';
+      embed.style.width = vc.w + '%';
+      embed.style.height = vc.h + '%';
+
+      const video = document.createElement('video');
+      video.src = `videos/${vc.file}`;
+      // Not muted — playback triggered by user click, browser allows audio
+      video.playsInline = true;
+      video.preload = 'auto';
+
+      const playBtn = document.createElement('div');
+      playBtn.className = 'play-btn';
+
+      embed.appendChild(video);
+      embed.appendChild(playBtn);
+
+      embed.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleVideo(i, vi);
+      });
+
+      video.addEventListener('ended', () => {
+        embed.classList.remove('playing');
+        const allDone = VIDEO_CONFIG[i].every((_, idx) => {
+          const v = videoElements[i][idx];
+          return v.video.ended;
+        });
+        if (allDone) {
+          setTimeout(() => goToSlide(i + 1), 600);
+        }
+      });
+
+      frame.appendChild(embed);
+      videoElements[i].push({ video, playBtn, embed });
+    });
+  }
+
+  slideDiv.appendChild(frame);
+  container.appendChild(slideDiv);
+}
+
+// === VIDEO CONTROL ===
+function toggleVideo(slideIdx, videoIdx) {
+  if (!videoElements[slideIdx] || !videoElements[slideIdx][videoIdx]) return;
+  const { video, playBtn, embed } = videoElements[slideIdx][videoIdx];
+
+  if (video.paused) {
+    videoElements[slideIdx].forEach((v, i) => {
+      if (i !== videoIdx) {
+        v.video.pause();
+        v.embed.classList.remove('playing');
+      }
+    });
+    video.play();
+    embed.classList.add('playing');
+  } else {
+    video.pause();
+    embed.classList.remove('playing');
+  }
+}
+
+function pauseAllVideos(slideIdx) {
+  if (!videoElements[slideIdx]) return;
+  videoElements[slideIdx].forEach(({ video, embed }) => {
+    video.pause();
+    video.currentTime = 0;
+    embed.classList.remove('playing');
+  });
+}
+
+// === NAVIGATION ===
+function goToSlide(n) {
+  if (n < 1 || n > TOTAL_SLIDES || isTransitioning || n === currentSlide) return;
+  isTransitioning = true;
+
+  pauseAllVideos(currentSlide);
+
+  document.getElementById(`slide-${currentSlide}`).style.display = 'none';
+  document.getElementById(`slide-${n}`).style.display = '';
+  currentSlide = n;
+
+  updateSidebar();
+  scrollThumbIntoView();
+
+  setTimeout(() => { isTransitioning = false; }, 300);
+}
+
+function nextSlide() { goToSlide(currentSlide + 1); }
+function prevSlide() { goToSlide(currentSlide - 1); }
+
+// === KEYBOARD ===
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+    e.preventDefault();
+    nextSlide();
+  } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+    e.preventDefault();
+    prevSlide();
+  }
+});
+
+// === LEFT SIDEBAR THUMBNAILS ===
+const sidebarThumbs = document.getElementById('sidebarThumbs');
+
+for (let i = 1; i <= TOTAL_SLIDES; i++) {
+  const item = document.createElement('div');
+  item.className = 'thumb-item' + (i === 1 ? ' active' : '');
+  item.dataset.slide = i;
+  item.addEventListener('click', () => goToSlide(i));
+
+  const img = document.createElement('img');
+  img.src = SLIDE_IMAGE(i);
+  img.alt = `第 ${i} 页`;
+  img.loading = 'lazy';
+  item.appendChild(img);
+
+  const num = document.createElement('div');
+  num.className = 'thumb-num';
+  num.textContent = i;
+  item.appendChild(num);
+
+  sidebarThumbs.appendChild(item);
+}
+
+function updateSidebar() {
+  document.getElementById('sidebarPage').textContent = `${currentSlide} / ${TOTAL_SLIDES}`;
+  sidebarThumbs.querySelectorAll('.thumb-item').forEach(el => {
+    el.classList.toggle('active', parseInt(el.dataset.slide) === currentSlide);
+  });
+}
+
+function scrollThumbIntoView() {
+  const active = sidebarThumbs.querySelector('.thumb-item.active');
+  if (active) {
+    active.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+// === DOUBLE-CLICK FULLSCREEN ===
+document.addEventListener('dblclick', () => {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen?.();
+  } else {
+    document.exitFullscreen?.();
+  }
+});
+
+console.log('Presentation loaded: 百度一镜-直播数字人解决方案, ' + TOTAL_SLIDES + ' slides');
+</script>
+</body>
+</html>
