@@ -252,7 +252,7 @@ for (let i = 1; i <= TOTAL_SLIDES; i++) {
   frame.className = 'slide-frame';
 
   const img = document.createElement('img');
-  img.dataset.src = SLIDE_IMAGE(i); if (i === 1) img.src = SLIDE_IMAGE(i);
+  img.src = SLIDE_IMAGE(i);
   img.alt = `第 ${i} 页`;
   img.draggable = false;
   frame.appendChild(img);
@@ -351,9 +351,6 @@ function goToSlide(n) {
   isTransitioning = true;
 
   pauseAllVideos(currentSlide);
-  // Lazy-load slide image on navigate
-  var _nImg = document.getElementById('slide-'+n).querySelector('img');
-  if (_nImg && _nImg.dataset.src) _nImg.src = _nImg.dataset.src;
 
   document.getElementById(`slide-${currentSlide}`).style.display = 'none';
   document.getElementById(`slide-${n}`).style.display = '';
@@ -417,7 +414,7 @@ for (let i = 1; i <= TOTAL_SLIDES; i++) {
   item.addEventListener('click', () => goToSlide(i));
 
   const img = document.createElement('img');
-  img.dataset.src = SLIDE_IMAGE(i); if (i === 1) img.src = SLIDE_IMAGE(i);
+  img.src = SLIDE_IMAGE(i);
   img.alt = `第 ${i} 页`;
   item.appendChild(img);
 
