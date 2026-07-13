@@ -17,8 +17,8 @@
     min-width: 140px;
     height: 100%;
     background: rgba(0,0,0,0.4);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    /* backdrop removed for perf */
+    -webkit-/* backdrop removed for perf */
     display: flex; flex-direction: column;
     z-index: 40;
     overflow: hidden;
@@ -252,7 +252,7 @@ for (let i = 1; i <= TOTAL_SLIDES; i++) {
   frame.className = 'slide-frame';
 
   const img = document.createElement('img');
-  img.src = SLIDE_IMAGE(i);
+  img.dataset.src = SLIDE_IMAGE(i); if (i === 1) img.src = SLIDE_IMAGE(i); else img.src = '';
   img.alt = `第 ${i} 页`;
   img.draggable = false;
   frame.appendChild(img);
@@ -283,7 +283,7 @@ for (let i = 1; i <= TOTAL_SLIDES; i++) {
       video.src = `videos/${vc.file}`;
       // Not muted — playback triggered by user click, browser allows audio
       video.playsInline = true;
-      video.preload = 'auto';
+      video.preload = 'none';
 
       const playBtn = document.createElement('div');
       playBtn.className = 'play-btn';
@@ -351,6 +351,9 @@ function goToSlide(n) {
   isTransitioning = true;
 
   pauseAllVideos(currentSlide);
+  // Lazy-load slide image on navigate
+  var _nImg = document.getElementById('slide-'+n).querySelector('img');
+  if (_nImg && _nImg.dataset.src && !_nImg.src) _nImg.src = _nImg.dataset.src;
 
   document.getElementById(`slide-${currentSlide}`).style.display = 'none';
   document.getElementById(`slide-${n}`).style.display = '';
@@ -386,7 +389,7 @@ for (let i = 1; i <= TOTAL_SLIDES; i++) {
   item.addEventListener('click', () => goToSlide(i));
 
   const img = document.createElement('img');
-  img.src = SLIDE_IMAGE(i);
+  img.dataset.src = SLIDE_IMAGE(i); if (i === 1) img.src = SLIDE_IMAGE(i); else img.src = '';
   img.alt = `第 ${i} 页`;
   img.loading = 'lazy';
   item.appendChild(img);
