@@ -5,167 +5,326 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>百度一镜 · 数字人直播 · 一页纸</title>
 <style>
+  :root {
+    --ink: #14233c;
+    --muted: #5d6b85;
+    --brand: #2b5cff;
+    --brand-deep: #1b3fb8;
+    --red: #f34a3d;
+    --green: #0ea875;
+    --line: #e3e9f3;
+    --soft: #f5f8fd;
+    --gold: #c88a24;
+  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: "PingFang SC", "Alibaba PuHuiTi", "Helvetica Neue", sans-serif; background: #FFFFFF; color: #1E293B; line-height: 1.5; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    color: var(--ink);
+    background: #e9eef6;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page {
+    width: 800px;
+    max-width: 100%;
+    margin: 22px auto;
+    background: #fff;
+    padding: 22px 26px 16px;
+    box-shadow: 0 12px 40px rgba(20, 35, 60, .12);
+  }
 
-  .page { max-width: 1000px; margin: 0 auto; padding: 40px 36px; background: #FFFFFF; }
+  /* 品牌头 */
+  .brand-bar { display: flex; align-items: center; justify-content: space-between; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-logo { width: 40px; height: 40px; border-radius: 9px; background: linear-gradient(135deg, var(--brand), var(--brand-deep)); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; }
+  .brand-name { font-size: 20px; font-weight: 800; letter-spacing: .5px; }
+  .brand-name span { color: var(--brand); }
+  .brand-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .brand-tags { display: flex; gap: 6px; }
+  .brand-tags span { font-size: 11px; color: var(--brand); background: var(--soft); border: 1px solid #d9e4fb; padding: 3px 9px; border-radius: 12px; }
 
-  /* ── 品牌头 ── */
-  .brand-bar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 3px solid #1560FF; margin-bottom: 28px; }
-  .brand-bar .name { font-size: 22px; font-weight: 700; color: #1560FF; letter-spacing: 1px; }
-  .brand-bar .tagline { font-size: 14px; color: #64748B; }
+  /* Hero */
+  .hero { display: grid; grid-template-columns: 1fr 170px; gap: 14px; padding: 18px 0 12px; }
+  .hero-copy { display: flex; flex-direction: column; justify-content: center; }
+  .eyebrow { font-size: 12px; font-weight: 700; color: var(--red); display: flex; align-items: center; gap: 6px; margin-bottom: 7px; }
+  .eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--red); box-shadow: 0 0 0 4px rgba(243,74,61,.14); }
+  .hero h1 { font-size: 28px; line-height: 1.18; font-weight: 800; letter-spacing: .5px; }
+  .hero h1 em { font-style: normal; color: var(--brand); }
+  .hero .slogan { font-size: 15px; color: var(--muted); margin-top: 7px; }
+  .hero .value-line { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .value-pill { font-size: 12px; color: var(--ink); background: var(--soft); border: 1px solid var(--line); border-radius: 7px; padding: 4px 10px; }
+  .value-pill b { color: var(--brand); }
+  .hero-visual { border-radius: 14px; overflow: hidden; border: 1px solid var(--line); position: relative; background: #f0f3fa; width: 170px; height: 170px; flex-shrink: 0; }
+  .hero-visual img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .hero-visual video { width: 100%; height: 100%; object-fit: cover; display: block; background: #000; }
+  .live-badge { position: absolute; left: 10px; top: 10px; background: var(--red); color: #fff; font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 5px; display: flex; align-items: center; gap: 5px; }
+  .live-badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #fff; animation: blink 1.4s infinite; }
+  .visual-note { position: absolute; left: 10px; right: 10px; bottom: 10px; background: rgba(20,35,60,.78); color: #fff; font-size: 11px; padding: 5px 9px; border-radius: 7px; }
+  @keyframes blink { 50% { opacity: .3; } }
 
-  /* ── 主标题 ── */
-  .hero { margin-bottom: 28px; }
-  .hero h1 { font-size: 36px; font-weight: 700; color: #0F172A; margin-bottom: 6px; }
-  .hero .sub { font-size: 16px; color: #64748B; }
+  /* 数据行 */
+  .metrics { display: grid; grid-template-columns: repeat(5, 1fr); background: linear-gradient(135deg, #f2f6ff, #eef3fe); border: 1px solid #d9e4fb; border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
+  .metric { text-align: center; padding: 12px 8px; border-left: 1px solid #e1e9fa; }
+  .metric:first-child { border-left: 0; }
+  .metric .num { font-size: 24px; font-weight: 800; color: var(--brand); line-height: 1.1; }
+  .metric .num small { font-size: 13px; }
+  .metric .label { font-size: 12px; color: var(--muted); margin-top: 3px; }
 
-  /* ── 数据行 ── */
-  .data-row { display: flex; gap: 0; background: #F0F6FE; border-radius: 12px; overflow: hidden; margin-bottom: 32px; border: 1px solid #D6E4F7; }
-  .data-item { flex: 1; text-align: center; padding: 20px 12px; position: relative; }
-  .data-item + .data-item { border-left: 1px solid #D6E4F7; }
-  .data-item .num { font-size: 30px; font-weight: 700; color: #1560FF; }
-  .data-item .label { font-size: 12px; color: #64748B; margin-top: 4px; }
+  /* 区块 */
+  .section { margin-top: 14px; }
+  .section-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; }
+  .section-title { font-size: 16px; font-weight: 800; position: relative; padding-left: 11px; }
+  .section-title::before { content: ""; position: absolute; left: 0; top: 3px; bottom: 3px; width: 4px; border-radius: 2px; background: var(--brand); }
+  .section-note { font-size: 11px; color: var(--muted); }
 
-  /* ── 区块标题 ── */
-  .section-title { font-size: 18px; font-weight: 700; color: #0F172A; margin-bottom: 16px; padding-left: 12px; border-left: 3px solid #1560FF; }
+  .cap-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .cap-card { border: 1px solid var(--line); border-radius: 10px; padding: 11px 13px 10px; background: #fff; display: flex; flex-direction: column; gap: 6px; }
+  .cap-card .cap-top { display: flex; align-items: center; gap: 8px; }
+  .cap-icon { width: 28px; height: 28px; border-radius: 8px; background: var(--brand); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; flex-shrink: 0; }
+  .cap-card:nth-child(2) .cap-icon { background: #10a37f; }
+  .cap-card:nth-child(3) .cap-icon { background: #f25c3d; }
+  .cap-card:nth-child(4) .cap-icon { background: #7a5af8; }
+  .cap-card h3 { font-size: 14px; font-weight: 800; }
+  .cap-card ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .cap-card li { font-size: 12px; color: var(--muted); position: relative; padding-left: 14px; }
+  .cap-card li::before { content: ""; position: absolute; left: 2px; top: 7px; width: 5px; height: 5px; border-radius: 50%; background: #aab9d4; }
+  .cap-card .cap-data { margin-top: auto; font-size: 11px; color: var(--brand); font-weight: 700; border-top: 1px dashed var(--line); padding-top: 6px; }
 
-  /* ── 能力卡片 ── */
-  .cap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 32px; }
-  .cap-card { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 18px; }
-  .cap-card h3 { font-size: 15px; font-weight: 700; color: #1560FF; margin-bottom: 8px; }
-  .cap-card ul { list-style: none; }
-  .cap-card ul li { font-size: 13px; color: #475569; padding: 2px 0 2px 16px; position: relative; }
-  .cap-card ul li::before { content: "\2713"; position: absolute; left: 0; color: #1560FF; font-weight: 700; }
+  /* 中部两栏 */
+  .mid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 14px; margin-top: 14px; }
+  .panel { border: 1px solid var(--line); border-radius: 10px; padding: 13px 15px; }
+  .panel h4 { font-size: 14px; font-weight: 800; margin-bottom: 9px; }
+  .platform-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .platform { border: 1px solid var(--line); border-radius: 8px; padding: 8px; background: var(--soft); }
+  .platform .p-name { font-size: 13px; font-weight: 800; display: flex; align-items: center; gap: 5px; }
+  .platform .p-name i { font-style: normal; font-size: 10px; color: #fff; background: var(--brand); border-radius: 3px; padding: 1px 4px; }
+  .platform .p-name i.weixin { background: var(--green); }
+  .platform .p-name i.tb { background: #f25c3d; }
+  .platform .p-name i.tk { background: #7a5af8; }
+  .platform p { font-size: 11px; color: var(--muted); margin-top: 5px; line-height: 1.5; }
+  .platform b { color: var(--ink); }
 
-  /* ── 价格 ── */
-  .price-row { display: flex; gap: 12px; margin-bottom: 32px; }
-  .price-card { flex: 1; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 18px; text-align: center; }
-  .price-card.featured { border-color: #1560FF; background: #F0F6FE; }
-  .price-card .p-name { font-size: 15px; font-weight: 700; }
-  .price-card .p-desc { font-size: 12px; color: #64748B; margin: 2px 0 10px; }
-  .price-card .p-price { font-size: 26px; font-weight: 700; color: #1560FF; }
-  .price-card .p-unit { font-size: 12px; color: #64748B; }
+  .price-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .price-card { border: 1px solid var(--line); border-radius: 8px; padding: 9px 10px; }
+  .price-card.featured { border-color: var(--brand); background: #f3f7ff; box-shadow: 0 0 0 1px var(--brand); }
+  .price-card .price-name { font-size: 12px; font-weight: 800; }
+  .price-card .price-desc { font-size: 10px; color: var(--muted); margin: 3px 0 6px; min-height: 28px; }
+  .price-card .price { font-size: 19px; font-weight: 800; color: var(--brand); }
+  .price-card .price small { font-size: 11px; color: var(--muted); font-weight: 500; }
+  .price-note { margin-top: 8px; font-size: 11px; color: var(--muted); line-height: 1.6; }
+  .price-note b { color: var(--ink); }
 
-  /* ── 行业 ── */
-  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
-  .tag { background: #F0F6FE; color: #1560FF; padding: 6px 16px; border-radius: 16px; font-size: 13px; border: 1px solid #D6E4F7; }
+  /* 底部 */
+  .bottom { display: grid; grid-template-columns: 1fr 1.4fr; gap: 14px; margin-top: 14px; }
+  .industry-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+  .tag { font-size: 12px; color: var(--ink); background: var(--soft); border: 1px solid var(--line); padding: 4px 10px; border-radius: 14px; }
+  .flow { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+  .flow-step { background: var(--soft); border: 1px solid var(--line); border-radius: 8px; padding: 7px 5px; text-align: center; position: relative; }
+  .flow-step .step-num { width: 20px; height: 20px; line-height: 20px; border-radius: 50%; background: var(--brand); color: #fff; font-size: 11px; font-weight: 800; margin: 0 auto 4px; }
+  .flow-step p { font-size: 11px; font-weight: 700; }
+  .flow-step span { font-size: 10px; color: var(--muted); display: block; margin-top: 2px; line-height: 1.4; }
 
-  /* ── 底部 ── */
-  .footer { border-top: 2px solid #1560FF; padding-top: 16px; display: flex; justify-content: space-between; font-size: 12px; color: #64748B; }
+  .footer { margin-top: 16px; padding-top: 12px; border-top: 2px solid var(--ink); display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .footer .left { font-size: 12px; font-weight: 700; }
+  .footer .left span { color: var(--brand); }
+  .footer .tech { font-size: 11px; color: var(--muted); }
+  .footer .tech b { color: var(--ink); }
+  .footer .copy { font-size: 11px; color: var(--muted); text-align: right; }
 
-  @media (max-width: 700px) {
-    .page { padding: 20px 16px; }
-    .hero h1 { font-size: 28px; }
-    .cap-grid { grid-template-columns: 1fr; }
-    .price-row { flex-direction: column; }
-    .data-row { flex-wrap: wrap; }
-    .data-item { flex-basis: 45%; }
-    .data-item:nth-child(3) ~ .data-item { border-left: none; }
+  @media screen and (max-width: 700px) {
+    .page { padding: 18px 14px; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .metrics { grid-template-columns: repeat(2, 1fr); }
+    .metric:nth-child(3) { border-left: 0; }
+    .metric { border-top: 1px solid #e1e9fa; }
+    .cap-grid, .mid, .bottom { grid-template-columns: 1fr; }
+    .platform-grid, .price-grid, .flow { grid-template-columns: repeat(2, 1fr); }
+    .brand-tags { display: none; }
+    .footer { flex-direction: column; text-align: center; }
+  }
+  @media print {
+    body { background: #fff; }
+    .page { width: 210mm; min-height: 297mm; margin: 0; box-shadow: none; padding: 13mm 15mm; }
   }
 </style>
 </head>
 <body>
 <div class="page">
 
-  <!-- 品牌 -->
   <div class="brand-bar">
-    <div class="name">百度一镜</div>
-    <div class="tagline">企业级AI数字人解决方案</div>
+    <div class="brand">
+      <div class="brand-logo">一</div>
+      <div>
+        <div class="brand-name">百度<span>一镜</span> · 数字人直播</div>
+        <div class="brand-sub">企业级 AI 数字人直播解决方案 · 百度一镜产品线</div>
+      </div>
+    </div>
+    <div class="brand-tags">
+      <span>SaaS 标准化</span>
+      <span>PaaS 定制化</span>
+      <span>托管服务</span>
+    </div>
   </div>
 
-  <!-- 主标题 -->
   <div class="hero">
-    <h1>数字人直播</h1>
-    <div class="sub">7×24h 全天候 AI 数字人直播 · 让生意不打烊</div>
-  </div>
-
-  <!-- 核心数据 -->
-  <div class="data-row">
-    <div class="data-item"><div class="num">2400+</div><div class="label">数字人形象</div></div>
-    <div class="data-item"><div class="num">800+</div><div class="label">音色库</div></div>
-    <div class="data-item"><div class="num">&lt;15s</div><div class="label">智能回复</div></div>
-    <div class="data-item"><div class="num">95%+</div><div class="label">问答准确率</div></div>
-    <div class="data-item"><div class="num">1,200</div><div class="label">元/月起</div></div>
-  </div>
-
-  <!-- 核心能力 -->
-  <div class="section-title">核心能力</div>
-  <div class="cap-grid">
-    <div class="cap-card">
-      <h3>超拟真数字人</h3>
-      <ul>
-        <li>业内最大公库形象池，2400+ 形象 &amp; 800+ 音色</li>
-        <li>真人一键克隆，5 分钟回放即可生成</li>
-        <li>唇动 IDC 排名第一，高说服力进阶转化 +15%</li>
-      </ul>
+    <div class="hero-copy">
+      <div class="eyebrow">24H 无人值守 · AI 自动讲解</div>
+      <h1>让直播增长更简单，<em>更高效</em></h1>
+      <div class="slogan">超拟真数字人 + AI 脚本 + 智能问答，覆盖内容平台、货架平台与出海场景，7×24 小时稳定开播。</div>
+      <div class="value-line">
+        <span class="value-pill">覆盖 <b>30+</b> 行业</span>
+        <span class="value-pill">服务 <b>1000+</b> 企业</span>
+        <span class="value-pill"><b>95%</b> 平台的选择</span>
+        <span class="value-pill">短视频媒体平台 · 视频号 · 淘宝 · 京东 · TikTok</span>
+      </div>
     </div>
-    <div class="cap-card">
-      <h3>AI 智能脚本</h3>
-      <ul>
-        <li>文心 + DeepSeek 双模型驱动</li>
-        <li>自动生成含痛点、卖点、促单的完整脚本</li>
-        <li>多风格可选：科普 / 种草 / 情感 / 通用</li>
-      </ul>
-    </div>
-    <div class="cap-card">
-      <h3>商品展示 &amp; 素材调度</h3>
-      <ul>
-        <li>5+ 切镜特写，脚本语义联动素材</li>
-        <li>AI 一键装修，100+ SKU 灵活切换</li>
-        <li>外景试驾、产品细节全覆盖</li>
-      </ul>
-    </div>
-    <div class="cap-card">
-      <h3>智能互动问答</h3>
-      <ul>
-        <li>15s 内口播回复，回复率 90%+</li>
-        <li>跨品问答，讲 A 品能答 B 品问题</li>
-        <li>多轮互动：邀评 / 动态讲解 / 主动逼单</li>
-      </ul>
+    <div class="hero-visual">
+      <video autoplay muted loop playsinline preload="auto" controls src="videos/老罗视频demo.mov"></video>
+      <span class="live-badge">LIVE</span>
+      <div class="visual-note">老罗数字人直播演示</div>
     </div>
   </div>
 
-  <!-- 版本定价 -->
-  <div class="section-title">版本与定价</div>
-  <div class="price-row">
-    <div class="price-card">
-      <div class="p-name">基础版</div>
-      <div class="p-desc">公库形象开播</div>
-      <div class="p-price">1,200</div>
-      <div class="p-unit">元/月</div>
+  <div class="metrics">
+    <div class="metric"><div class="num">+40<small>%</small></div><div class="label">GMV 提升</div></div>
+    <div class="metric"><div class="num">+120<small>%</small></div><div class="label">开播规模</div></div>
+    <div class="metric"><div class="num">-63<small>%</small></div><div class="label">制作成本</div></div>
+    <div class="metric"><div class="num">95<small>%+</small></div><div class="label">问答精准率</div></div>
+    <div class="metric"><div class="num">+35<small>%</small></div><div class="label">平均停留时长</div></div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title">核心能力</div>
+      <div class="section-note">从形象、脚本到互动，一站式完成数字人直播</div>
     </div>
-    <div class="price-card featured">
-      <div class="p-name">旗舰版</div>
-      <div class="p-desc">真人克隆 · 送 5 次克隆</div>
-      <div class="p-price">2,300</div>
-      <div class="p-unit">元/月</div>
-    </div>
-    <div class="price-card">
-      <div class="p-name">进阶版</div>
-      <div class="p-desc">高说服力进阶形象</div>
-      <div class="p-price">4,000</div>
-      <div class="p-unit">元/个起</div>
+    <div class="cap-grid">
+      <div class="cap-card">
+        <div class="cap-top"><div class="cap-icon">形</div><h3>超拟真数字人</h3></div>
+        <ul>
+          <li>唇形匹配超拟真，支持大动作、走播/站播</li>
+          <li>商品展示与实景背景灵活结合</li>
+          <li>直播回放一键克隆，无需复杂录制</li>
+        </ul>
+        <div class="cap-data">开播规模 +120% · 制作成本 -63%</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-top"><div class="cap-icon">文</div><h3>AI 脚本自动产出</h3></div>
+        <ul>
+          <li>一键生成多风格脚本，卖点清晰、结构完整</li>
+          <li>自动解析商品/落地页，支持自定义调整</li>
+          <li>场景体验 / 使用人群 / 专业塑品 / 提单转化</li>
+        </ul>
+        <div class="cap-data">自研电商小模型 + 文心4.5 + DeepSeek</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-top"><div class="cap-icon">问</div><h3>智能问答自动接管</h3></div>
+        <ul>
+          <li>15 秒内自动回复，自然衔接直播间节奏</li>
+          <li>复刻头部主播逻辑，理解意图、引导价值</li>
+          <li>素材随问答实时切换，真实感展示</li>
+        </ul>
+        <div class="cap-data">夜间销量 +28% · 人力成本 -58%</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-top"><div class="cap-icon">播</div><h3>多平台开播方案</h3></div>
+        <ul>
+          <li>短视频媒体平台：定制开播手机 + 导播台</li>
+          <li>视频号：专业交付，代开播测试一周</li>
+          <li>淘宝/京东：云端部署，免费测试 2 周</li>
+          <li>出海：24 种语言，TikTok 原生支持</li>
+        </ul>
+        <div class="cap-data">总场观 +32% · 线索 +23%</div>
+      </div>
     </div>
   </div>
 
-  <!-- 适用行业 -->
-  <div class="section-title">适用行业</div>
-  <div class="tags">
-    <span class="tag">电商带货</span>
-    <span class="tag">在线教育</span>
-    <span class="tag">金融保险</span>
-    <span class="tag">房产汽车</span>
-    <span class="tag">医疗服务</span>
-    <span class="tag">本地生活</span>
-    <span class="tag">品牌官播</span>
-    <span class="tag">出海企业</span>
+  <div class="mid">
+    <div class="panel">
+      <h4>开播方案与平台</h4>
+      <div class="platform-grid">
+        <div class="platform">
+          <div class="p-name">短视频媒体平台 <i>内容</i></div>
+          <p><b>定制开播手机 + 导播台</b>，旗舰版超拟真数字人，实景场地开播。</p>
+        </div>
+        <div class="platform">
+          <div class="p-name">视频号 <i class="weixin">视</i></div>
+          <p><b>专业交付辅助开播</b>，AI 标识合规，每天 4 小时测试一周。</p>
+        </div>
+        <div class="platform">
+          <div class="p-name">淘宝/京东 <i class="tb">货</i></div>
+          <p><b>云端部署 + 官方直播伴侣</b>，免费测试 2 周，不限开播时长。</p>
+        </div>
+        <div class="platform">
+          <div class="p-name">TikTok <i class="tk">海</i></div>
+          <p><b>24 种语言本土化</b>，外模形象库分钟级生成，出海即开播。</p>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <h4>版本与定价</h4>
+      <div class="price-grid">
+        <div class="price-card">
+          <div class="price-name">测试包</div>
+          <div class="price-desc">百度代开播 · 含 1 次形象 + 1 次语音</div>
+          <div class="price">900<small> 元/周</small></div>
+        </div>
+        <div class="price-card">
+          <div class="price-name">SaaS 基础版</div>
+          <div class="price-desc">公共库 2000+ 形象 / 800+ 声音开播</div>
+          <div class="price">2,529<small> 元/月</small></div>
+        </div>
+        <div class="price-card featured">
+          <div class="price-name">SaaS 旗舰版</div>
+          <div class="price-desc">公共库 + 超拟真克隆 · 赠 5 次形象 + 2 次声音</div>
+          <div class="price">3,343<small> 元/月</small></div>
+        </div>
+        <div class="price-card">
+          <div class="price-name">内容平台月付包</div>
+          <div class="price-desc">数字人 3,343 元/路 + 导播台 1,000 元/月</div>
+          <div class="price">4,343<small> 元/月 + 手机 2,388 元/台</small></div>
+        </div>
+      </div>
+      <div class="price-note">
+        <div><b>更多选择：</b>海外旗舰版 1,432 美元/月 · 内容平台年付 40,000 + 4,000 元/年 + 手机 2,388 元/台 · API 直播推流 2,867 元/月 · API 轻量版 2,196 元/月</div>
+        <div>支持月付 / 年付 / 测试包，批量购买享折扣。</div>
+      </div>
+    </div>
   </div>
 
-  <!-- 底部 -->
+  <div class="bottom">
+    <div class="panel">
+      <h4>典型行业</h4>
+      <div class="industry-tags">
+        <span class="tag">服饰家居</span>
+        <span class="tag">快消酒饮</span>
+        <span class="tag">鞋服运动</span>
+        <span class="tag">汽车留资</span>
+        <span class="tag">健康滋补</span>
+        <span class="tag">教育留资/获客</span>
+        <span class="tag">本地生活</span>
+        <span class="tag">电商带货</span>
+        <span class="tag">出海企业</span>
+      </div>
+    </div>
+    <div class="panel">
+      <h4>专业交付流程</h4>
+      <div class="flow">
+        <div class="flow-step"><div class="step-num">1</div><p>沟通需求</p><span>目标·行业·账号</span></div>
+        <div class="flow-step"><div class="step-num">2</div><p>提交素材</p><span>底板·脚本·QA</span></div>
+        <div class="flow-step"><div class="step-num">3</div><p>制定计划</p><span>排期·检查点·风险</span></div>
+        <div class="flow-step"><div class="step-num">4</div><p>测试直播</p><span>全程跟播记录</span></div>
+        <div class="flow-step"><div class="step-num">5</div><p>输出报告</p><span>复盘·优化建议</span></div>
+        <div class="flow-step"><div class="step-num">6</div><p>正式合作</p><span>培训·答疑·持续优化</span></div>
+      </div>
+    </div>
+  </div>
+
   <div class="footer">
-    <span>百度一镜 · 企业级AI数字人解决方案</span>
-    <span>让增长，更简单</span>
+    <div class="left">百度<span>一镜</span> · 数字人直播</div>
+    <div class="tech">技术底座：<b>昆仑芯 · 飞桨 · 文心大模型</b> | 行业第一 · 世界互联网大会领先科技奖 · 中央网信办年度典型案例</div>
+    <div class="copy">让增长，更简单</div>
   </div>
 
 </div>

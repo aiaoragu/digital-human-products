@@ -1,2 +1,3 @@
 .DS_Store
-直播/videos/
+直播/videos/*
+!直播/videos/老罗视频demo.mov
