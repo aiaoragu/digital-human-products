@@ -72,9 +72,28 @@
 
   /* 区块 */
   .section { margin-top: 14px; }
-  .section-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; }
-  .section-title { font-size: 16px; font-weight: 800; position: relative; padding-left: 11px; }
-  .section-title::before { content: ""; position: absolute; left: 0; top: 3px; bottom: 3px; width: 4px; border-radius: 2px; background: var(--brand); }
+  .section-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .section-title,
+  .panel h4 {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 10px 16px;
+    border-radius: 9px;
+    background: linear-gradient(135deg, var(--brand), var(--brand-deep));
+    color: #fff;
+    font-weight: 800;
+    box-shadow: 0 4px 12px rgba(20, 35, 60, .14);
+  }
+  .section-title::before,
+  .panel h4::before {
+    content: "";
+    width: 7px;
+    height: 17px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, .92);
+  }
+  .section-title { flex: 1; font-size: 17px; }
   .section-note { font-size: 11px; color: var(--muted); }
 
   .cap-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
@@ -84,7 +103,21 @@
   .cap-card:nth-child(2) .cap-icon { background: #10a37f; }
   .cap-card:nth-child(3) .cap-icon { background: #f25c3d; }
   .cap-card:nth-child(4) .cap-icon { background: #7a5af8; }
-  .cap-card h3 { font-size: 14px; font-weight: 800; }
+  .cap-card h3 {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px 4px 8px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--brand);
+    background: #eaf2ff;
+  }
+  .cap-card h3::before { content: ""; width: 5px; height: 13px; border-radius: 2px; background: currentColor; }
+  .cap-card:nth-child(2) h3 { color: #0b8a5e; background: #e5f7ef; }
+  .cap-card:nth-child(3) h3 { color: #d2492f; background: #fdeee9; }
+  .cap-card:nth-child(4) h3 { color: #6247d1; background: #f0ebfe; }
   .cap-card ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
   .cap-card li { font-size: 12px; color: var(--muted); position: relative; padding-left: 14px; }
   .cap-card li::before { content: ""; position: absolute; left: 2px; top: 7px; width: 5px; height: 5px; border-radius: 50%; background: #aab9d4; }
@@ -93,7 +126,11 @@
   /* 中部两栏 */
   .mid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 14px; margin-top: 14px; }
   .panel { border: 1px solid var(--line); border-radius: 10px; padding: 13px 15px; }
-  .panel h4 { font-size: 14px; font-weight: 800; margin-bottom: 9px; }
+  .panel h4 { font-size: 15px; margin-bottom: 14px; }
+  .mid .panel:first-child h4 { background: linear-gradient(135deg, #16b87f, #0b8a5e); }
+  .mid .panel:last-child h4 { background: linear-gradient(135deg, #f29a3a, #e46f1f); }
+  .bottom .panel:first-child h4 { background: linear-gradient(135deg, #8b6cfa, #6247d1); }
+  .bottom .panel:last-child h4 { background: linear-gradient(135deg, #12a5a5, #0b7f7f); }
   .platform-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
   .platform { border: 1px solid var(--line); border-radius: 8px; padding: 8px; background: var(--soft); }
   .platform .p-name { font-size: 13px; font-weight: 800; display: flex; align-items: center; gap: 5px; }
@@ -266,11 +303,6 @@
       <h4>版本与定价</h4>
       <div class="price-grid">
         <div class="price-card">
-          <div class="price-name">测试包</div>
-          <div class="price-desc">百度代开播 · 含 1 次形象 + 1 次语音</div>
-          <div class="price">900<small> 元/周</small></div>
-        </div>
-        <div class="price-card">
           <div class="price-name">SaaS 基础版</div>
           <div class="price-desc">公共库 2000+ 形象 / 800+ 声音开播</div>
           <div class="price">2,529<small> 元/月</small></div>
@@ -288,7 +320,7 @@
       </div>
       <div class="price-note">
         <div><b>更多选择：</b>海外旗舰版 1,432 美元/月 · 内容平台年付 40,000 + 4,000 元/年 + 手机 2,388 元/台 · API 直播推流 2,867 元/月 · API 轻量版 2,196 元/月</div>
-        <div>支持月付 / 年付 / 测试包，批量购买享折扣。</div>
+        <div>支持月付 / 年付，批量购买享折扣。</div>
       </div>
     </div>
   </div>
